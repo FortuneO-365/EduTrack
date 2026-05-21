@@ -16,19 +16,29 @@ class UserProfile(models.Model):
 
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    matric_number = models.CharField(max_length=50, unique=True, auto_created=True)
-    department = models.CharField(max_length=100)
-    level = models.CharField(max_length=20)
+    matric_number = models.CharField(max_length=50, unique=True, editable=False)
     #profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True) # to be changed later to azure blob storage
     
+    def save(self, *args, **kwargs):
+        if not self.matric_number:
+            last_student = StudentProfile.objects.all().order_by('id').last()
+            new_id = (last_student.id + 1) if last_student else 1
+            self.matric_number = f"STU{new_id:05d}"
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return self.user.username + ' - ' + self.matric_number
+        return f"{self.user.username} - {self.matric_number}"
     
 class InstructorProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    staff_id = models.CharField(max_length=50, unique=True, auto_created=True)
-    department = models.CharField(max_length=100)
-    specialization = models.CharField(max_length=100)
+    staff_id = models.CharField(max_length=50, unique=True, editable=False)
+
+    def save(self, *args, **kwargs):
+        if not self.staff_id:
+            last_instructor = InstructorProfile.objects.all().order_by('id').last()
+            new_id = (last_instructor.id + 1) if last_instructor else 1
+            self.staff_id = f"INS{new_id:05d}"
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.user.username

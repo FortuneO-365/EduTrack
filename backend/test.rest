@@ -1,11 +1,57 @@
 POST http://127.0.0.1:8000/api/auth/login/
 Content-Type: application/json
 
-{ "username": "John", "password": "password123" }
+{ "username": "Fortune", "password": "password123" }
 
 ###
 
 POST http://127.0.0.1:8000/api/auth/register/
 Content-Type: application/json
 
-{ "username": "Pascal", "password": "password123", "email": "pascal@gmail.com", "first_name": "Pascal", "last_name": "Doe", "user_type": "student"  }
+{ "username": "Matthew", "password": "password123", "email": "matthew@gmail.com", "first_name": "Matthew", "last_name": "George", "user_type": "instructor" }
+
+###
+
+
+### COURSE ENDPOINTS ###
+
+
+GET http://127.0.0.1:8000/api/courses/
+Content-Type: application/json
+Authorization: Token 1ea5caf70791e8ff05dd8cc4b80ef9914a580b35
+
+{}
+
+###
+
+POST http://127.0.0.1:8000/api/courses/create/
+Content-Type: application/json
+Authorization: Token 5c7063636e0389298cee60aec6d364f2a92f0a91
+
+{ "instructor": 1, "title": "English", "course_code": "Eng101", "description": "A basic introdution to English Language"}
+
+###
+
+GET http://127.0.0.1:8000/api/courses/1/
+Content-Type: application/json
+Authorization: Token 5c7063636e0389298cee60aec6d364f2a92f0a91
+
+{}
+
+###
+
+PUT  http://127.0.0.1:8000/api/courses/1/
+Content-Type: application/json
+Authorization: Token 5c7063636e0389298cee60aec6d364f2a92f0a91
+
+{ "title": "Introdution to Mathematics", "course_code": "Mth101", "description": "A basic introdution to mathematics", "instructor": 1}
+
+###
+
+DELETE http://127.0.0.1:8000/api/courses/2/
+Content-Type: application/json
+Authorization: Token 5c7063636e0389298cee60aec6d364f2a92f0a91
+
+{}
+
+###
