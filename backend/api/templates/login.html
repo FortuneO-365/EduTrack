@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,20 +10,17 @@
 <body>
     <div class="  h-screen w-screen md:flex">
         <div class=" h-[150px] overflow-hidden md:w-1/2 md:h-full">
-            {% load static %}
-
             <img src="{% static 'assets/background-1.png' %}" alt="" class="h-full w-full object-cover md:hidden">
             <img src="{% static 'assets/background-2.png' %}" alt="" class=" hidden md:block md:object-cover h-full w-full">
         </div>
         <div class=" flex items-center justify-center bg-white h-[100% - 150px] md:w-1/2 md:h-full">
             <div class=" w-4/5 flex items-center gap-2 flex-col">
                 <div class=" size-24">
-                    {% load static %}
-                    <img src=".{% static 'assets/logo.png' %}" alt="" class="">
+                    <img src="{% static 'assets/logo.png' %}" alt="EduTrack logo" class="">
                 </div>
                 <div class=" p-4 w-full">
                     <p class=" text-2xl font-semibold mb-6 text-center">Sign in to your account</p>
-                    <form method="POST" action="{% url 'login' %}">
+                    <form method="POST" action="{% url 'login_page' %}">
                         {% csrf_token %}
 
                         {% if error %}
@@ -31,12 +29,12 @@
 
                         <div>
                             <p class="font-semibold pb-1">Username</p>
-                            <input name="username" type="text" class="w-full border mb-4 p-1.5 outline-none rounded-md">
+                            <input name="username" type="text" value="{{ username|default:'' }}" autocomplete="username" required class="w-full border mb-4 p-1.5 outline-none rounded-md">
                         </div>
 
                         <div>
                             <p class="font-semibold pb-1">Password</p>
-                            <input name="password" type="password" class="w-full border mb-4 p-1.5 outline-none rounded-md">
+                            <input name="password" type="password" autocomplete="current-password" required class="w-full border mb-4 p-1.5 outline-none rounded-md">
                         </div>
 
                         <div>

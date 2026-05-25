@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.db import transaction
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
@@ -16,7 +16,214 @@ from .accounts.permission import IsStudent, IsInstructor, IsInstructorOrStudent
 
 # Create your views here.
 
-@api_view(['POST'])
+#################  PAGES  ###################
+def login_page(request):
+    if request.user.is_authenticated:
+        return redirect_user_by_type(request.user)
+
+    if request.method == "POST":
+        username = request.POST.get("username", "").strip()
+        password = request.POST.get("password", "")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect_user_by_type(user)
+
+        return render(request, "login.html", {
+            "error": "Invalid username or password",
+            "username": username,
+        })
+
+    return render(request, "login.html")
+
+
+def redirect_user_by_type(user):
+    user_type = getattr(getattr(user, "profile", None), "user_type", None)
+
+    if user_type == "student":
+        return redirect("student_dashboard")
+
+    if user_type == "instructor":
+        return redirect("instructor_dashboard")
+
+    return redirect("login_page")
+
+@authentication_classes([TokenAuthentication, SessionAuthentication])
+@permission_classes([IsAuthenticated, IsStudent])
+def student_dashboard(request):
+    user_type = getattr(getattr(request.user, "profile", None), "user_type", None)
+    return render(request, "dashboard.html", {"user_type": user_type})
+
+@authentication_classes([TokenAuthentication, SessionAuthentication])
+@permission_classes([IsAuthenticated, IsInstructor])
+def instructor_dashboard(request):
+    user_type = getattr(getattr(request.user, "profile", None), "user_type", None)
+    return render(request, "dashboard.html", {"user_type": user_type})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("login_page")
+
+def get_users(request):
+    user = User.objects.all()
+    serializer = UserSerializer(user, many=True)
+    return render(request, "user_profile.html", {"users": serializer.data})
+
+def get_user_profile(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    serializer = UserSerializer(user)
+    return render(request, "user_profile.html", {"user": serializer.data})
+
+@api_view(['GET', 'PUT', 'DELETE'])
+@authentication_classes([TokenAuthentication, SessionAuthentication])
+@permission_classes([IsAuthenticated, IsInstructorOrStudent])
+def user_profile(request):
+    user = request.user
+    serializer = UserSerializer(user)
+    user_type = getattr(getattr(user, "profile", None), "user_type", None)
+
+    if user_type == "student":
+        student_details = StudentProfile.objects.get(user=user)
+        student_serializer = StudentSerializer(student_details)
+        return render(
+            request, 
+            "user_profile.html", 
+            {
+                "user": serializer.data,
+                "user_type": user_type,
+                "profile": student_serializer.data
+            })
+
+    elif user_type == "instructor":
+        instructor_details = InstructorProfile.objects.get(user=user)
+        instructor_serializer = InstructorSerializer(instructor_details)
+        return render(
+            request, 
+            "user_profile.html", 
+            {
+                "user": serializer.data,
+                "user_type": user_type,
+                "profile": instructor_serializer.data
+            })
+    
+    if request.method == 'PUT':
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return render(
+                request,
+                'user_profile.html',
+                {
+                    "user":  serializer.data
+                })
+        else:
+            return render(
+                request,
+                'user_profile.html',
+                {
+                    "error": serializer.errors,
+                    "user": serializer.data
+                })
+        
+    elif request.method == 'DELETE':
+        user.delete()
+        logout(request)
+        return redirect("login_page")
+    
+    return render(
+        request, 
+        "user_profile.html", 
+        {
+            "user": serializer.data,
+            "user_type": user_type
+        })
+    
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication, SessionAuthentication])
+@permission_classes([IsAuthenticated, IsStudent])
+def get_all_courses(request):
+    # courses = Course.objects.all()
+    # serializer = CourseSerializer(courses, many=True)
+    courses = Course.objects.select_related("instructor__user").all()
+    return render(request, "courses.html", {"courses": courses})
+    # return Response({"courses": courses})   
+ 
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication, SessionAuthentication])
+@permission_classes([IsAuthenticated, IsStudent])
+def get_student_courses(request):
+    user = request.user.id
+    student_id = StudentProfile.objects.get(user__id=user).id
+    enrollments = Enrollment.objects.filter(student__id=student_id).select_related('course__instructor__user')
+    courses = [enrollment.course for enrollment in enrollments]
+    serializer = CourseSerializer(courses, many=True)
+    # return Response({"courses": serializer.data})
+    return render(request, "student_courses.html", {"courses": serializer.data})
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication, SessionAuthentication])
+@permission_classes([IsAuthenticated, IsInstructor])
+def get_instructor_course(request):
+    user = request.user.id
+    user_type = "instructor" 
+    instructor_id = InstructorProfile.objects.get(user__id=user).id
+
+    course = Course.objects.filter(instructor__id=instructor_id)
+    serializer = CourseSerializer(course, many=True)
+
+    course_materials = Materials.objects.filter(course__in=course)
+    material_serializer = MaterialsSerializer(course_materials, many=True)
+
+    assignments = Assignment.objects.filter(course__in=course)
+    assignment_serializer = AssignmentSerializer(assignments, many=True)
+
+    enrollments = Enrollment.objects.filter(course__in=course).select_related('student__user')
+    students = [enrollment.student for enrollment in enrollments]
+    student_serializer = StudentSerializer(students, many=True)
+
+
+    # return Response({
+    #     "courses": serializer.data,
+    #     "materials": material_serializer.data,
+    #     "assignments": assignment_serializer.data,
+    #     "students": student_serializer.data
+    # })
+
+    return render(request, "instructor_class.html", {
+        "course": serializer.data,
+        "materials": material_serializer.data,
+        "assignments": assignment_serializer.data,
+        "students": student_serializer.data,
+        "user_type": user_type
+    })
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication, SessionAuthentication])
+@permission_classes([IsAuthenticated, IsStudent])
+def get_course_details(request, course_id):
+
+    course = get_object_or_404(Course.objects.select_related("instructor__user"), id=course_id)
+    is_enrolled = Enrollment.objects.filter(student__user=request.user, course=course).exists()
+
+    course_materials = Materials.objects.filter(course=course) if is_enrolled else []
+    assignments = Assignment.objects.filter(course=course) if is_enrolled else []
+
+    return render(request, "course_details.html", {
+        "course": course,
+        "materials": course_materials,
+        "assignments": assignments,
+        "is_enrolled": is_enrolled,
+        "user_type": "student",
+    })
+
+
+#################  ENDPOINTS  ###################
+
+
 @permission_classes([AllowAny])
 @transaction.atomic
 def register_user(request):
@@ -46,23 +253,7 @@ def register_user(request):
     
     return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-def login_page(request):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect("get_user")  # change this to your dashboard later
-
-        return render(request, "login.html", {
-            "error": "Invalid username or password"
-        })
-
-    return render(request, "login.html")
-
+#to be removed later, just for testing purposes
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login_user(request):
@@ -73,23 +264,6 @@ def login_user(request):
     return Response({'token': token.key, 'user': UserSerializer(user).data})
 
 
-
-@api_view(['GET', 'PUT', 'DELETE'])
-@authentication_classes([TokenAuthentication, SessionAuthentication])
-@permission_classes([IsAuthenticated])
-def get_user(request):
-    user = request.user
-    serializer = UserSerializer(user)
-    return Response({'user': serializer.data})
-
-
-@api_view(['GET'])
-@authentication_classes([TokenAuthentication, SessionAuthentication])
-@permission_classes([IsAuthenticated, IsStudent])
-def get_courses(request):
-    courses = Course.objects.all()
-    serializer = CourseSerializer(courses, many=True)
-    return Response({'courses': serializer.data})
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication, SessionAuthentication])

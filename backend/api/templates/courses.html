@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="min-h-screen bg-slate-50">
+    <header class="sticky top-0 left-0 right-0 z-50 bg-white">
+        <nav class="px-2 md:px-6 border-b border-slate-200 w-full shadow-sm">
+            <div class="mx-auto flex items-center justify-between p-2">
+                <div class=" flex items-center">
+                    <div>
+                        <img src="{% static 'assets/logo.png' %}" alt="EduTrack logo" class="size-12">
+                    </div>
+                    <h2 class="text-xl font-semibold text-slate-950">EduTrack</h2>
+                </div>
+                <a href="{% url 'user_profile' %}" class="block cursor-pointer hover:shadow">
+                    <div class="flex items-center gap-4 p-2">
+                        <div class=" flex flex-col">
+                            <p class=" text-end">
+                                {{request.user.first_name}} {{request.user.last_name}}
+                            </p>
+                            <p class=" text-end capitalize text-slate-500 text-xs">
+                                {{ user_type|default:"Student" }}
+                            </p>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-icon lucide-circle-user size-7"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+                        </div>
+                        
+                    </div>
+                </a>
+            </div>
+        </nav>
+    </header>
+    <section class="flex flex-1">
+        <aside class=" sticky top-18 h-[calc(100vh-72px)] w-32 bg-white border-r border-slate-200 p-3 hidden md:flex flex-col justify-between">
+            <nav class="space-y-4 flex-1 overflow-y-auto custom-scrollbar pr-1">
+                <a href="{% url 'student_dashboard' %}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard size-8"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                    <p class="text-xs font-semibold">HOME</p>
+                </a>
+                <a href=" " class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full shadow-lg shadow-blue-200 bg-blue-500 text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-text-icon lucide-book-open-text size-8"><path d="M12 7v14"/><path d="M16 12h2"/><path d="M16 8h2"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/><path d="M6 12h2"/><path d="M6 8h2"/></svg>
+                    <p class="text-xs font-semibold">COURSES</p>
+                </a>
+                <a href="" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star-icon lucide-star size-8"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+                    <p class="text-xs font-semibold">GRADES</p>
+                </a>
+                <a href="" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-list-icon lucide-clipboard-list size-8"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+                    <p class="text-xs font-semibold">ASSIGNMENTS</p>
+                </a>
+            </nav>
+            <div class="pt-4 border-t border-slate-100">
+                <a href="{% url 'logout_view' %}" class="flex flex-col items-center justify-center p-4 w-full text-red-500 hover:bg-red-50 rounded-2xl transition group">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+                    <p class="text-xs font-semibold">Logout</p>
+                </a>
+            </div>
+        </aside>
+        <main class="flex-1 p-6 md:p-8 overflow-y-auto pb-24 md:pb-8">
+            <div class=" flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 max-w-5xl">
+                <div>
+                    <h1 class="font-black text-4xl">Courses</h1>
+                    <p class=" mt-1 text-slate-500 font-semibold italic">Here you can view all available courses.</p>
+                </div>
+                <a href="{% url 'student_courses' %}" class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all shadow-lg shadow-blue-100 group">
+                    View your Courses
+                </a>
+            </div>
+
+            <div class="w-full">
+                <div class="bg-white rounded-xl shadow-xl max-w-5xl border border-slate-200">
+                    <div class="px-6 py-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h3 class="font-black text-slate-900 uppercase tracking-tight">All Courses</h3>
+                        </div>
+                    </div>
+                    <div class="block overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-slate-50/50 text-slate-400 text-[10px] font-black uppercase tracking-widest">
+                                <tr>
+                                    <th class="px-8 py-5 border-b border-slate-100">Course Name</th>
+                                    <th class="px-8 py-5 border-b border-slate-100">Course Code</th>
+                                    <th class="px-8 py-5 border-b border-slate-100">Instructor</th>
+                                    <th class="px-8 py-5 border-b border-slate-100 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                            {% for course in courses %}
+                                <tr
+                                    class="hover:bg-slate-50 transition-colors cursor-pointer"
+                                    onclick="{window.location=`{% url 'course_details' course.id %}`}"
+                                    tabindex="0"
+                                >
+                                    <td class="px-8 py-5 border-b border-slate-100 font-semibold">{{ course.title }}</td>
+                                    <td class="px-8 py-5 border-b border-slate-100">{{ course.course_code }}</td>
+                                    <td class="px-8 py-5 border-b border-slate-100">{{ course.instructor.user.get_full_name }}</td>
+                                    <td class="px-8 py-5 border-b border-slate-100">
+                                        <div class="flex gap-2 items-center justify-end">
+                                            <button class="p-2 text-slate-500 rounded-md hover:shadow-sm">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-plus-icon lucide-user-plus size-4"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </section>
+</body>
