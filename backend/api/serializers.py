@@ -27,9 +27,22 @@ class CourseSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class EnrollmentSerializer(serializers.ModelSerializer):
+    student_first_name = serializers.CharField(source='student.user.first_name', read_only=True)
+    student_last_name = serializers.CharField(source='student.user.last_name', read_only=True)
+    student_full_name = serializers.CharField(source='student.user.get_full_name', read_only=True)
+
     class Meta:
         model = Enrollment
-        fields = '__all__'
+        fields = [
+            'id',
+            'student',
+            'course',
+            'status',
+            'enrollment_date',
+            'student_first_name',
+            'student_last_name',
+            'student_full_name',
+        ]
 
 class AssignmentSerializer(serializers.ModelSerializer):
     class Meta:

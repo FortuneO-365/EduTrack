@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="min-h-screen bg-slate-50 relative" id="body">
+    <header class="sticky top-0 left-0 right-0 z-50 bg-white">
+        <nav class="px-2 md:px-6 border-b border-slate-200 w-full shadow-sm">
+            <div class="mx-auto flex items-center justify-between p-2">
+                <div class=" flex items-center">
+                    <div>
+                        <img src="{% static 'assets/logo.png' %}" alt="EduTrack logo" class="size-12">
+                    </div>
+                    <h2 class="text-xl font-semibold text-slate-950">EduTrack</h2>
+                </div>
+                <div class=" flex gap-4 items-center">
+                    <a href="{% url 'user_profile' %}" class="block cursor-pointer rounded-md hover:shadow">
+                        <div class="flex items-center gap-4 p-2">
+                            <div class=" flex flex-col">
+                                <p class=" text-end">
+                                    {{request.user.first_name}} {{request.user.last_name}}
+                                </p>
+                                <p class=" text-end capitalize text-slate-500 text-xs">
+                                    {{ user_type|default:"Student" }}
+                                </p>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-icon lucide-circle-user size-7"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+                            </div>
+                            
+                        </div>
+                    </a>
+                    <button class="flex items-center justify-center p-2 rounded-md hover:shadow text-slate-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section class=" flex flex-1">
+        <aside class=" sticky top-18 h-[calc(100vh-72px)] w-32 bg-white border-r border-slate-200 p-3 hidden md:flex flex-col justify-between">
+            <nav class="space-y-4 flex-1 overflow-y-auto custom-scrollbar pr-1">
+                <a href="{% url 'instructor_dashboard' %}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard size-8"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                    <p class="text-xs font-semibold">HOME</p>
+                </a>
+                <a href="{% url 'instructor_course' %}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full bg-blue-500 text-white shadow-lg shadow-blue-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-text-icon lucide-book-open-text size-8"><path d="M12 7v14"/><path d="M16 12h2"/><path d="M16 8h2"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/><path d="M6 12h2"/><path d="M6 8h2"/></svg>
+                    <p class="text-xs font-semibold">COURSE</p>
+                </a>
+                <a href="{% url 'course_enrollments' %}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-plus-icon lucide-user-plus size-8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+                    <p class="text-xs font-semibold">ENROLLMENTS</p>
+                </a>
+                <a href="{% url 'instructor_assignments' course_id %}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-list-icon lucide-clipboard-list size-8"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+                    <p class="text-xs font-semibold">ASSIGNMENTS</p>
+                </a>
+                <a href="{% url 'user_profile'%}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings size-8"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>
+                    <p class="text-xs font-semibold">SETTINGS</p>
+                </a>
+            </nav>
+            <div class="pt-4 border-t border-slate-100">
+                <a href="{% url 'logout_view' %}" class="flex flex-col items-center justify-center p-4 w-full text-red-500 hover:bg-red-50 rounded-2xl transition group">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+                    <p class="text-xs font-semibold">Logout</p>
+                </a>
+            </div>
+        </aside>
+        <main class="flex-1 overflow-y-auto">
+            <div class="bg-white border-b border-slate-100 px-6 md:px-10 py-4 flex items-center justify-between">
+                <div>
+                    <a href="{% url 'instructor_course' %}"class="text-xs font-bold text-blue-600 uppercase flex items-center gap-2 mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-icon lucide-arrow-left size-4"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                        Go Back
+                    </a>
+                    <h1 class=" text-xl font-extrabold text-slate-900">Create New Lesson</h1>
+                </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row min-h-0 flex-1">
+                <div class="flex-1 px-6 md:px-10 py-8 overflow-y-auto lg:max-w-2xl">
+                    <div class="mb-5 fade-up d2">
+                        <label class="block text-xs font-black text-slate-600 uppercase tracking-widest mb-2">
+                            Lesson Title <span class="text-red-400">*</span>
+                        </label>
+                        <input
+                            id="lesson-title"
+                            type="text"
+                            maxlength="120"
+                            placeholder="e.g. Introduction to Linear Equations"
+                            oninput="syncReview()"
+                            class="field w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-base font-semibold text-slate-800 placeholder-slate-300"
+                        />
+                    </div>
+
+                    <div class="mb-8 fade-up d3">
+                        <label class="block  text-xs font-black text-slate-600 uppercase tracking-widest mb-2">
+                            Topic Description <span class="text-red-400">*</span>
+                        </label>
+                        <textarea
+                            id="lesson-desc"
+                            maxlength="800"
+                            rows="5"
+                            placeholder="Describe what this lesson covers, what students will learn, and any prerequisites they should know before starting…"
+                            oninput="syncReview()"
+                            class="field w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-700 placeholder-slate-300 resize-none leading-relaxed"
+                        ></textarea>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center gap-2.5 bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info-icon lucide-info size-4 text-blue-500"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                            <p class="text-sm text-blue-500">
+                                Upload <strong>one document</strong> per lesson. Accepted: <strong>PDF, DOCX, PPTX, XLSX, TXT</strong> · Max <strong>50 MB</strong>
+                            </p>
+                        </div>
+                        <div
+                            id="drop-zone"
+                            class="border-2 border-dashed border-slate-300 rounded-2xl p-10 flex flex-col items-center gap-4 cursor-pointer hover:border-blue-400 hover:bg-blue-50 transition"
+                            onclick="document.getElementById('file-input').click()"
+                            ondragover="onDragOver(event)"
+                            ondragleave="onDragLeave(event)"
+                            ondrop="onDrop(event)"
+                        >
+                            <input id="file-input" type="file" class="hidden"
+                            accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt"
+                            onchange="handleFile(this.files[0])"/>
+
+                            <div class="size-16 bg-white rounded-2xl border border-slate-200 shadow-sm flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload-icon lucide-upload size-8 text-blue-500"><path d="M12 3v12"/><path d="m17 8-5-5-5 5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg>
+                            </div>
+                            <div class="text-center">
+                                <p class=" font-bold text-slate-700 text-base leading-snug">Drop your lecture document here</p>
+                                <p class="text-sm text-slate-400 mt-1">or <span class="text-blue-600 font-semibold underline underline-offset-2">click to browse</span></p>
+                            </div>
+                            <div class="flex gap-2 flex-wrap justify-center">
+                                <span class="text-[11px] font-bold bg-red-50   text-red-600   px-2.5 py-1 rounded-full">PDF</span>
+                                <span class="text-[11px] font-bold bg-blue-50  text-blue-600  px-2.5 py-1 rounded-full">DOCX</span>
+                                <span class="text-[11px] font-bold bg-amber-50 text-amber-600 px-2.5 py-1 rounded-full">PPTX</span>
+                                <span class="text-[11px] font-bold bg-green-50 text-green-600 px-2.5 py-1 rounded-full">XLSX</span>
+                                <span class="text-[11px] font-bold bg-slate-100 text-slate-500 px-2.5 py-1 rounded-full">TXT</span>
+                            </div>
+                        </div>
+                        <div id="file-card" class="hidden">
+                            <div id="uploading-state" class="bg-white border border-slate-200 rounded-2xl p-5">
+                                <div class="flex items-center gap-4">
+                                    <div id="fc-thumb" class="w-14 h-16 rounded-xl flex flex-col items-center justify-center flex-shrink-0">
+                                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                            <polyline points="14 2 14 8 20 8"/>
+                                        </svg>
+                                        <span id="fc-ext" class="text-white text-[8px] font-black uppercase mt-0.5"></span>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p id="fc-name" class=" font-bold text-slate-800 text-sm truncate"></p>
+                                        <p id="fc-meta" class="text-xs text-slate-400 mt-0.5"></p>
+                                        <div id="fc-progress-wrap" class="mt-2">
+                                            <div class="flex justify-between mb-1">
+                                                <span class="text-[10px] text-slate-400 font-medium">Uploading…</span>
+                                                <span id="fc-pct" class="text-[10px] text-blue-600 font-bold">0%</span>
+                                            </div>
+                                            <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                                                <div id="fc-bar" class="bar-pulse h-full bg-blue-500 rounded-full transition-all" style="width:0%"></div>
+                                            </div>
+                                        </div>
+                                        <div id="fc-ready" class="hidden mt-2 flex items-center gap-1.5">
+                                            <svg class="w-3.5 h-3.5 text-green-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                                            </svg>
+                                            <span class="text-[11px] text-green-600 font-bold">Ready to publish</span>
+                                        </div>
+                                    </div>
+                                    <button onclick="removeFile()" title="Remove"
+                                    class="w-9 h-9 rounded-xl bg-red-50 hover:bg-red-100 text-red-400 hover:text-red-600 flex items-center justify-center flex-shrink-0 transition">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="inline-preview-wrap" class="hidden mt-3">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    <span class=" text-[10px] font-black text-slate-400 uppercase tracking-widest">Document Preview</span>
+                                </div>
+                                <div id="inline-preview" class="rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 min-h-[180px]"></div>
+                            </div>
+                        </div>
+                        <div id="action-row" class=" mt-6 pt-5 border-t border-slate-200 flex items-center justify-between gap-3 flex-wrap">
+                            <p class="text-xs text-slate-400" id="action-hint">Fill in all fields and upload a document to publish.</p>
+                            <div class="flex gap-2">
+                                <button id="publish-btn" onclick="publishLesson()" disabled
+                                 class="flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-xl  font-bold text-sm shadow-md shadow-brand-600/20 transition opacity-50 cursor-not-allowed">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <line x1="22" y1="2" x2="11" y2="13"/>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                                    </svg>
+                                    Publish Lesson
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="review-panel"
+                 class="hidden lg:flex flex-col w-full p-6 xl:w-[400px] xl:p-0 shrink-0 border-l border-slate-200 bg-white sticky top-0 h-screen overflow-y-auto">
+                    <div class="px-6 py-5 border-b border-slate-100 bg-blue-600">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="w-2 h-2 rounded-full bg-blue-300 animate-pulse"></span>
+                            <p class=" text-[10px] font-black text-black- uppercase tracking-widest">Live Preview</p>
+                        </div>
+                        <p class=" font-extrabold text-white text-lg leading-tight" id="rv-title">Lesson preview</p>
+                        <p class="text-blue-200 text-xs mt-1">Updates as you type</p>
+                    </div>
+
+                    <div id="rv-empty" class="flex-1 flex flex-col items-center justify-center p-8 text-center gap-3">
+                        <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off-icon lucide-eye-off size-7 text-blue-500"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>
+                        </div>
+                        <p class="font-syne font-bold text-slate-500 text-sm">Nothing to preview yet</p>
+                        <p class="text-xs text-slate-400 leading-relaxed">Start filling in the lesson title and description to see a live preview here.</p>
+                    </div>
+
+                    <div id="rv-body" class="hidden flex-1 flex-col overflow-y-auto">
+                        <div class="px-5 pt-5 pb-3 border-b border-slate-100">
+                            <p class="text-[11px] font-bold text-blue-600 uppercase tracking-widest mb-1" id="rv-breadcrumb">Mathematics · MTH 101</p>
+                            <h2 class="font-syne font-extrabold text-slate-900 text-lg leading-snug" id="rv-heading">—</h2>
+                        </div>
+                        <div class="px-5 py-4 border-b border-slate-100">
+                            <p class="font-syne text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Description</p>
+                            <p id="rv-desc" class="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap">—</p>
+                        </div>
+                        <div class="px-5 py-4 border-b border-slate-100">
+                            <p class="font-syne text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Lecture Document</p>
+                            <div id="rv-no-doc" class="flex items-center gap-2 text-xs text-slate-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-icon lucide-file size-4"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/></svg>
+                                No document uploaded yet
+                            </div>
+                            <div id="rv-doc" class="hidden">
+                                <div class="flex items-center gap-3 bg-slate-50 rounded-xl p-3 border border-slate-200">
+                                    <div id="rv-doc-thumb" class="w-10 h-12 rounded-lg flex flex-col items-center justify-center flex-shrink-0">
+                                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                            <polyline points="14 2 14 8 20 8"/>
+                                        </svg>
+                                        <span id="rv-doc-ext" class="text-white text-[7px] font-black uppercase mt-0.5"></span>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p id="rv-doc-name" class="text-sm font-semibold text-slate-700 truncate"></p>
+                                        <p id="rv-doc-size" class="text-xs text-slate-400 mt-0.5"></p>
+                                    </div>
+                                    <div id="rv-doc-status" class="flex-shrink-0"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-5 py-4">
+                            <p class="font-syne text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Checklist</p>
+                            <div class="space-y-2" id="rv-checklist"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </section>
+    <div id="toast" class=" hidden fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 text-sm font-semibold fade-in">
+        <svg class="w-4 h-4 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        <span id="toast-msg">Done!</span>
+    </div>
+</body>
+<script>
+
+const ALLOWED = ['pdf','doc','docx','ppt','pptx','xls','xlsx','txt'];
+let uploadedFile  = null;  // { file, name, ext, size, date, status }
+let uploadTimer   = null;
+
+
+
+const $ = id => document.getElementById(id);
+
+const EXT_THUMB = {
+  pdf:'bg-pink-200', doc:'bg-blue-200', docx:'bg-blue-200',
+  ppt:'bg-amber-200', pptx:'bg-amber-200',
+  xls:'bg-green-200', xlsx:'bg-green-200', txt:'bg-slate-200'
+};
+const EXT_LABEL = {
+  pdf:'PDF Document', docx:'Word Document', doc:'Word Document',
+  pptx:'PowerPoint Presentation', ppt:'PowerPoint Presentation',
+  xlsx:'Excel Spreadsheet', xls:'Excel Spreadsheet', txt:'Text File'
+};
+
+function fmtSize(b){
+  if(b<1024)      return b+' B';
+  if(b<1024**2)   return (b/1024).toFixed(1)+' KB';
+  return (b/1024**2).toFixed(2)+' MB';
+}
+
+function showToast(msg,dur=2800){
+  $('toast-msg').textContent=msg;
+  $('toast').classList.remove('hidden');
+  setTimeout(()=>$('toast').classList.add('hidden'),dur);
+}
+
+/* ══════════════════════════════════════════════════════════
+   CHARACTER COUNTERS
+══════════════════════════════════════════════════════════ */
+$('lesson-title').addEventListener('input', function(){
+  const n=this.value.length, max=120;
+  const el=$('title-cc');
+  el.textContent=`${n} / ${max}`;
+  el.className='font-mono '+(n>max*.85?n>=max?'cc-limit':'cc-warn':'');
+});
+
+$('lesson-desc').addEventListener('input', function(){
+  const n=this.value.length, max=800;
+  const el=$('desc-cc');
+  el.textContent=`${n} / ${max}`;
+  el.className='font-mono '+(n>max*.85?n>=max?'cc-limit':'cc-warn':'');
+});
+
+/* ══════════════════════════════════════════════════════════
+   DRAG & DROP
+══════════════════════════════════════════════════════════ */
+function onDragOver(e){
+  e.preventDefault();
+  $('drop-zone').classList.add('drag-over');
+}
+function onDragLeave(){
+  $('drop-zone').classList.remove('drag-over');
+}
+function onDrop(e){
+  e.preventDefault();
+  $('drop-zone').classList.remove('drag-over');
+  const f=e.dataTransfer.files[0];
+  if(f) handleFile(f);
+}
+
+/* ══════════════════════════════════════════════════════════
+   FILE HANDLING — single file only
+══════════════════════════════════════════════════════════ */
+function handleFile(file){
+  if(!file) return;
+  const ext=file.name.split('.').pop().toLowerCase();
+  if(!ALLOWED.includes(ext)){
+    showToast(`⚠️ "${file.name}" is not an accepted file type`,3500);
+    return;
+  }
+  if(file.size>50*1024*1024){
+    showToast('⚠️ File exceeds the 50 MB limit',3500);
+    return;
+  }
+
+  // If there's already a file, cancel its upload
+  if(uploadTimer){ clearInterval(uploadTimer); uploadTimer=null; }
+
+  uploadedFile={ file, name:file.name, ext, size:file.size, date:file.lastModified, status:'uploading' };
+
+  // Swap drop zone → file card
+  $('drop-zone').classList.add('hidden');
+  $('file-card').classList.remove('hidden');
+  $('file-card').classList.add('fade-up');
+  $('action-row').classList.remove('hidden');
+
+  // Fill file card
+  const thumb=$('fc-thumb');
+  thumb.className=`w-14 h-16 rounded-xl flex flex-col items-center justify-center flex-shrink-0 ${EXT_THUMB[ext]||'bg-slate-200'}`;
+  $('fc-ext').textContent=ext;
+  $('fc-name').textContent=file.name;
+  $('fc-meta').textContent=`${EXT_LABEL[ext]||ext.toUpperCase()} · ${fmtSize(file.size)}`;
+  $('fc-progress-wrap').classList.remove('hidden');
+  $('fc-ready').classList.add('hidden');
+  $('fc-bar').style.width='0%';
+  $('fc-pct').textContent='0%';
+
+  // Simulate upload progress
+  let progress=0;
+  uploadTimer=setInterval(()=>{
+    progress+=Math.random()*16+8;
+    if(progress>=100){
+      progress=100;
+      clearInterval(uploadTimer);
+      uploadTimer=null;
+      uploadedFile.status='ready';
+      $('fc-bar').style.width='100%';
+      $('fc-bar').classList.remove('bar-pulse');
+      $('fc-pct').textContent='100%';
+      setTimeout(()=>{
+        $('fc-progress-wrap').classList.add('hidden');
+        $('fc-ready').classList.remove('hidden');
+        updatePublishBtn();
+        syncReview();
+        showInlinePreview();
+      },300);
+    } else {
+      $('fc-bar').style.width=progress+'%';
+      $('fc-pct').textContent=Math.round(progress)+'%';
+    }
+    syncReview();
+  },100);
+
+  syncReview();
+}
+
+/* ══════════════════════════════════════════════════════════
+   INLINE PREVIEW (txt / pdf)
+══════════════════════════════════════════════════════════ */
+function showInlinePreview(){
+  if(!uploadedFile) return;
+  const {file,ext}=uploadedFile;
+  const wrap=$('inline-preview-wrap');
+  const prev=$('inline-preview');
+
+  if(ext==='txt'){
+    wrap.classList.remove('hidden');
+    const r=new FileReader();
+    r.onload=e=>{
+      prev.innerHTML=`<pre class="p-4 text-xs text-slate-600 font-mono whitespace-pre-wrap overflow-auto max-h-56">${esc(e.target.result.slice(0,2000))}</pre>`;
+    };
+    r.readAsText(file);
+  } else if(ext==='pdf'){
+    wrap.classList.remove('hidden');
+    prev.innerHTML=`<iframe src="${URL.createObjectURL(file)}" class="w-full h-64 rounded-xl" title="PDF"></iframe>`;
+  } else {
+    wrap.classList.add('hidden');
+  }
+}
+
+function esc(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ══════════════════════════════════════════════════════════
+   REMOVE FILE
+══════════════════════════════════════════════════════════ */
+function removeFile(){
+  if(uploadTimer){ clearInterval(uploadTimer); uploadTimer=null; }
+  uploadedFile=null;
+  $('file-input').value='';
+  $('file-card').classList.add('hidden');
+  $('file-card').classList.remove('fade-up');
+  $('drop-zone').classList.remove('hidden');
+  $('inline-preview-wrap').classList.add('hidden');
+  $('inline-preview').innerHTML='';
+  $('action-row').classList.add('hidden');
+  updatePublishBtn();
+  syncReview();
+}
+
+/* ══════════════════════════════════════════════════════════
+   SYNC LIVE REVIEW PANEL
+══════════════════════════════════════════════════════════ */
+function syncReview(){
+  const title=$('lesson-title').value.trim();
+  const desc =$('lesson-desc').value.trim();
+  const hasTitle=title.length>0;
+  const hasDesc =desc.length>0;
+  const hasDoc  =!!uploadedFile;
+  const anyFilled=hasTitle||hasDesc||hasDoc;
+
+  // Header title
+  $('rv-title').textContent=title||'Lesson Preview';
+
+  if(!anyFilled){
+    $('rv-empty').classList.remove('hidden');
+    $('rv-body').classList.add('hidden');
+    $('review-panel').classList.add('hidden');
+    $('review-panel').classList.remove('lg:flex');
+    return;
+  }
+
+  $('rv-empty').classList.add('hidden');
+  $('rv-body').classList.remove('hidden');
+  $('rv-body').classList.add('flex');
+  $('review-panel').classList.remove('hidden');
+  $('review-panel').classList.add('lg:flex');
+
+  // Heading
+  $('rv-heading').textContent=title||'(no title yet)';
+  $('rv-heading').className='font-syne font-extrabold text-lg leading-snug '+(hasTitle?'text-slate-900':'text-slate-300 italic');
+
+  // Description
+  $('rv-desc').textContent=desc||'(no description yet)';
+  $('rv-desc').className='text-sm leading-relaxed whitespace-pre-wrap '+(hasDesc?'text-slate-600':'text-slate-300 italic');
+
+  // Document block
+  if(hasDoc){
+    const f=uploadedFile;
+    $('rv-no-doc').classList.add('hidden');
+    $('rv-doc').classList.remove('hidden');
+    const t=$('rv-doc-thumb');
+    t.className=`w-10 h-12 rounded-lg flex flex-col items-center justify-center flex-shrink-0 ${EXT_THUMB[f.ext]||'bg-slate-200'}`;
+    $('rv-doc-ext').textContent=f.ext;
+    $('rv-doc-name').textContent=f.name;
+    $('rv-doc-size').textContent=fmtSize(f.size);
+    const st=$('rv-doc-status');
+    if(f.status==='ready'){
+      st.innerHTML=`<span class="text-[10px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">Ready</span>`;
+    } else {
+      st.innerHTML=`<span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">Uploading…</span>`;
+    }
+  } else {
+    $('rv-no-doc').classList.remove('hidden');
+    $('rv-doc').classList.add('hidden');
+  }
+
+  // Checklist
+  const checks=[
+    { label:'Lesson title added',       done:hasTitle },
+    { label:'Topic description written', done:hasDesc  },
+    { label:'Document uploaded',         done:hasDoc   },
+    { label:'Document ready',            done:hasDoc && uploadedFile?.status==='ready' },
+  ];
+  $('rv-checklist').innerHTML=checks.map(c=>`
+    <div class="flex items-center gap-2.5">
+      <div class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${c.done?'bg-green-500':'bg-slate-200'}">
+        ${c.done
+          ? `<svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`
+          : `<div class="w-1.5 h-1.5 rounded-full bg-slate-400"></div>`
+        }
+      </div>
+      <span class="text-sm ${c.done?'text-slate-700 font-medium':'text-slate-400'}">${c.label}</span>
+    </div>
+  `).join('');
+
+  // Action hint
+  const allDone=checks.every(c=>c.done);
+  $('action-hint').textContent=allDone
+    ? '✓ All fields complete — ready to publish!'
+    : 'Complete all checklist items before publishing.';
+  $('action-hint').className='text-xs '+(allDone?'text-green-600 font-semibold':'text-slate-400');
+}
+
+/* ══════════════════════════════════════════════════════════
+   PUBLISH BUTTON STATE
+══════════════════════════════════════════════════════════ */
+function updatePublishBtn(){
+  const title=$('lesson-title').value.trim();
+  const desc =$('lesson-desc').value.trim();
+  const ready=uploadedFile?.status==='ready';
+  const canPublish=title&&desc&&ready;
+  const btn=$('publish-btn');
+  btn.disabled=!canPublish;
+  btn.className='flex items-center gap-2 px-5 py-2.5 rounded-xl font-syne font-bold text-sm transition '
+    +(canPublish
+      ? 'bg-brand-600 hover:bg-brand-700 text-white shadow-md shadow-brand-600/20 cursor-pointer'
+      : 'bg-slate-200 text-slate-400 cursor-not-allowed opacity-60');
+}
+
+// Re-check publish state on every input
+['lesson-title','lesson-desc'].forEach(id=>{
+  $(id).addEventListener('input',()=>{ updatePublishBtn(); syncReview(); });
+});
+
+/* ══════════════════════════════════════════════════════════
+   SAVE DRAFT / PUBLISH
+══════════════════════════════════════════════════════════ */
+function publishLesson(){
+  const t=$('lesson-title').value.trim();
+  if(!t||!$('lesson-desc').value.trim()||!uploadedFile){
+    showToast('⚠️ Please fill in all required fields',3000);
+    return;
+  }
+  showToast(`🚀 "${t}" published successfully!`,3200);
+}
+</script>
+</html>

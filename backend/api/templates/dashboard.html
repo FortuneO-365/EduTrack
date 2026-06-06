@@ -17,22 +17,27 @@
                     </div>
                     <h2 class="text-xl font-semibold text-slate-950">EduTrack</h2>
                 </div>
-                <a href="{% url 'user_profile' %}" class="block cursor-pointer hover:shadow">
-                    <div class="flex items-center gap-4 p-2">
-                        <div class=" flex flex-col">
-                            <p class=" text-end">
-                                {{request.user.first_name}} {{request.user.last_name}}
-                            </p>
-                            <p class=" text-end capitalize text-slate-500 text-xs">
-                                {{ user_type|default:"Student" }}
-                            </p>
+                <div class=" flex gap-4 items-center">
+                    <a href="{% url 'user_profile' %}" class="block cursor-pointer rounded-md hover:shadow">
+                        <div class="flex items-center gap-4 p-2">
+                            <div class=" flex flex-col">
+                                <p class=" text-end">
+                                    {{request.user.first_name}} {{request.user.last_name}}
+                                </p>
+                                <p class=" text-end capitalize text-slate-500 text-xs">
+                                    {{ user_type|default:"Student" }}
+                                </p>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-icon lucide-circle-user size-7"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+                            </div>
+                            
                         </div>
-                        <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-icon lucide-circle-user size-7"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
-                        </div>
-                        
-                    </div>
-                </a>
+                    </a>
+                    <button class="flex items-center justify-center p-2 rounded-md hover:shadow text-slate-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
+                    </button>
+                </div>
             </div>
         </nav>
     </header>
@@ -48,15 +53,15 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-text-icon lucide-book-open-text size-8"><path d="M12 7v14"/><path d="M16 12h2"/><path d="M16 8h2"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/><path d="M6 12h2"/><path d="M6 8h2"/></svg>
                     <p class="text-xs font-semibold">COURSE</p>
                 </a>
-                <a href="#" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
+                <a href="{% url 'course_enrollments' %}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-plus-icon lucide-user-plus size-8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
                     <p class="text-xs font-semibold">ENROLLMENTS</p>
                 </a>
-                <a href="#" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
+                <a href="{% url 'instructor_assignments' course.id %}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-list-icon lucide-clipboard-list size-8"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
                     <p class="text-xs font-semibold">ASSIGNMENTS</p>
                 </a>
-                <a href="#" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
+                <a href="{%url 'user_profile'%}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings size-8"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>
                     <p class="text-xs font-semibold">SETTINGS</p>
                 </a>
@@ -72,13 +77,17 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-text-icon lucide-book-open-text size-8"><path d="M12 7v14"/><path d="M16 12h2"/><path d="M16 8h2"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/><path d="M6 12h2"/><path d="M6 8h2"/></svg>
                     <p class="text-xs font-semibold">COURSES</p>
                 </a>
-                <a href="" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
+                <a href="{% url 'student_grades' %}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star-icon lucide-star size-8"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
                     <p class="text-xs font-semibold">GRADES</p>
                 </a>
-                <a href="" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
+                <a href="{% url 'student_assignments' %}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-list-icon lucide-clipboard-list size-8"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
                     <p class="text-xs font-semibold">ASSIGNMENTS</p>
+                </a>
+                <a href="{%url 'user_profile'%}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings size-8"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>
+                    <p class="text-xs font-semibold">SETTINGS</p>
                 </a>
             </nav>
             {% endif %}
@@ -89,15 +98,322 @@
                 </a>
             </div>
         </aside>
-        <main class="py-4 px-6 md:py-8 md:px-16">
-            <div>
+        {% if user_type == 'instructor'%}
+        <main class="flex-1 p-6 md:p-8 overflow-y-auto pb-24 md:pb-8">
+            <div class="mb-8">
                 <div class=" flex items-center">
                     <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
                     <p class=" font-semibold ml-2 text-slate-500 text-xs uppercase">System Operational</p>
                 </div>
                 <h1 class="mt-2 text-4xl text-slate-950 font-black tracking-tight">Welcome back, {{ request.user.username }}.</h1>
-                <p class="mt-3 text-slate-500 font-semibold italic">Here is what's happening with your classes today.</p>
+                <p class="mt-3 text-slate-500 font-semibold italic">
+                    Here is what's happening with your classes today.
+                </p>
+            </div>
+
+            <!-- COURSE CARD -->
+            <div class="bg-white border border-slate-200 rounded-md px-6 py-3 mb-6">
+                <div class="mb-2.5 text-2xl font-bold">{{ course.title }}</div>
+                <div class="flex items-center gap-3">
+                    <span class="inline-flex items-center gap-2 bg-blue-100 text-blue-600 text-xs font-semibold px-2 py-1 rounded-md uppercase">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-graduation-cap-icon lucide-graduation-cap size-4"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>
+                        {{ course.course_code }}
+                    </span>
+                    <span class="inline-flex items-centergap-2 bg-green-100 text-green-600 text-xs font-semibold px-2 py-1 rounded-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-icon lucide-users size-4"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+                        {{ total_students }} Student Enrolled
+                    </span>
+                </div>
+                <div class="text-slate-500 mt-3">
+                    {{ course.description  }}
+                </div>
+            </div>
+
+            <!-- STATS -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-7">
+            <div class="bg-white border border-slate-200 rounded-md p-4 shadow-sm hover:bg-slate-50">
+                <div class="font-bold uppercase text-slate-500 mb-2 text-sm">Active Tutorials</div>
+                <div class="font-black text-4xl">{{ tutorial_count }}</div>
+                <span class="font-semibold text-xs px-2 py-0.5 rounded-md mt-1.5 bg-blue-100 text-blue-600">Materials</span>
+            </div>
+            <div class="bg-white border border-slate-200 rounded-md p-4 shadow-sm hover:bg-slate-50">
+                <div class="font-bold uppercase text-slate-500 mb-2 text-sm">Assignments</div>
+                <div class="font-black text-4xl">{{active_assignments_count}}</div>
+                <span class="font-semibold text-xs px-2 py-0.5 rounded-md mt-1.5 bg-amber-100 text-amber-600">Due Soon</span>
+            </div>
+            <div class="bg-white border border-slate-200 rounded-md p-4 shadow-sm hover:bg-slate-50">
+                <div class="font-bold uppercase text-slate-500 mb-2 text-sm">Submissions</div>
+                <div class="font-black text-4xl">{{submission_count}}</div>
+                <span class="font-semibold text-xs px-2 py-0.5 rounded-md mt-1.5 bg-green-100 text-green-600">Received</span>
+            </div>
+            <div class="bg-white border border-slate-200 rounded-md p-4 shadow-sm hover:bg-slate-50">
+                <div class="font-bold uppercase text-slate-500 mb-2 text-sm">Pending Grades</div>
+                <div class="font-black text-4xl">{{pending_grades_count}}</div>
+                <span class="font-semibold text-xs px-2 py-0.5 rounded-md mt-1.5 bg-red-100 text-red-600">To Review</span>
+            </div>
+            </div>
+
+            <!-- TWO COL -->
+            <div class="flex flex-col md:flex-row gap-4">
+                <section class="flex-2 bg-white rounded-[2rem] border border-slate-200 shadow-sm overflow-hidden w-full">
+                    <div class="px-6 py-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h3 class="font-black text-slate-900 uppercase tracking-tight">Active Tutorials</h3>
+                            <p class="text-xs text-slate-400 font-medium">Manage and monitor your course performance</p>
+                        </div>
+                    </div>
+                    <div class="block overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead class="bg-slate-50/50 text-slate-400 text-[10px] font-black uppercase tracking-widest">
+                                <tr>
+                                    <th class="px-8 py-5 border-b border-slate-100">Title</th>
+                                    <th class="px-8 py-5 border-b border-slate-100">File Type</th>
+                                    <th class="px-8 py-5 border-b border-slate-100 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                {% for material in last_four_materials %}
+                                <tr class="bg-white">
+                                    <td class="px-8 py-5 border-b border-slate-100">{{ material.title }}</td>
+                                    <td class="px-8 py-5 border-b border-slate-100">{{ material.file_type }}</td>
+                                    <td class="px-8 py-5 border-b border-slate-100 text-right">
+                                        <div class="flex gap-2 items-center justify-end">
+                                            <button class="p-2 text-slate-500 rounded-md hover:shadow-sm">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>
+                                            </button>
+                                            <button class="p-2 text-red-500 rounded-md hover:shadow-sm">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="md:hidden divide-y divide-slate-100"></div>
+                </section>
+                <section class="flex-1">
+                    <div class="bg-white rounded-[2rem] border border-slate-200 shadow-sm overflow-hidden w-full mb-6">
+                        <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div>
+                                <h3 class="font-black text-slate-900 uppercase tracking-tight">Assignments</h3>
+                                <p class="text-xs text-slate-400 font-medium">Manage and monitor your assignments</p>
+                            </div>
+                        </div>
+                        <div class="block overflow-x-auto">
+                            {% if last_two_assignments %}
+    
+                            {%  for assignment in last_two_assignments %}
+                            <ul>
+                                <li>
+                                    <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+                                        <div class="flex flex-col">
+                                            <h4 class="font-bold text-slate-800">{{ assignment.title }}</h4>
+                                            <p class="text-sm text-slate-500">{{ assignment.description }}</p>
+                                        </div>
+                                        <div>
+                                            {% if assignment.due_date > today %}
+                                            <p class="text-xs text-slate-400 bg-slate-200 px-2 py-1 rounded-full">Expired</p>
+                                            {% else %}
+                                            <p class="text-xs text-green-500 bg-green-100 px-2 py-1 rounded-full">Active</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            {% endfor %}
+                            {%else%}
+                            <div class="p-6 text-center text-slate-500 font-semibold">No assignments posted yet</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-[2rem] border border-slate-200 shadow-sm overflow-hidden w-full">
+                        <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div>
+                                <h3 class="font-black text-slate-900 uppercase tracking-tight">Recent Enrollments</h3>
+                                <p class="text-xs text-slate-400 font-medium">Manage and monitor your students</p>
+                            </div>
+                        </div>
+                        <div class="block overflow-x-auto">
+                            {% if last_three_enrollments %}
+    
+                            {%  for enrollment in last_three_enrollments %}
+                            <ul>
+                                <li>
+                                    <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+                                        <div class="flex items-center gap-2">
+                                            <p class="text-sm text-slate-500">{{ forloop.counter }}.</p>
+                                            <h4 class="font-semibold text-slate-800">{{ enrollment.student_full_name }}</h4>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            {% endfor %}
+                            {%else%}
+                            <div class="p-6">No assignments</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </section>
             </div>
         </main>
+        {% else %}
+        <main class="flex-1 overflow-y-auto p-6 md:p-8 pb-24 md:pb-8">
+
+            <!-- Page header -->
+            <div class="mb-8">
+                <div class=" flex items-center">
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                    <p class=" font-semibold ml-2 text-slate-500 text-xs uppercase">System Operational</p>
+                </div>
+                <h1 class="mt-2 text-4xl text-slate-950 font-black tracking-tight">Welcome back, {{ request.user.username }}.</h1>
+                <p class="mt-3 text-slate-500 font-semibold italic">
+                    Here is what's happening today.
+                </p>
+            </div>
+
+            <!-- ── STAT CARDS ──────────────────────────────────────────────── -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-7">
+                <div class="bg-white rounded-2xl border border-slate-200 p-5">
+                    <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Courses</span>
+                    <div class="w-9 h-9 rounded-xl bg-brand-50 flex items-center justify-center bg-gray-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-graduation-cap-icon lucide-graduation-cap size-5"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>
+                    </div>
+                    </div>
+                    <p class="font-syne text-3xl font-extrabold text-slate-800">1</p>
+                    <span class="mt-1 inline-block text-xs font-semibold bg-gray-50 text-gray-700 px-2 py-0.5 rounded-md">Enrolled</span>
+                </div>
+                <div class="bg-white rounded-2xl border border-slate-200 p-5">
+                    <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Assignments</span>
+                    <div class="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center text-amber-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy-icon lucide-copy size-5"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                    </div>
+                    </div>
+                    <p class="font-syne text-3xl font-extrabold text-slate-800">3</p>
+                    <span class="mt-1 inline-block text-xs font-semibold bg-amber-50 text-amber-700 px-2 py-0.5 rounded-md">1 Due Soon</span>
+                </div>
+                <div class="bg-white rounded-2xl border border-slate-200 p-5">
+                    <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Submissions</span>
+                    <div class="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center text-green-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big-icon lucide-circle-check-big size-5"><path d="M21.801 10A10 10 0 1 1 17 3.335"/><path d="m9 11 3 3L22 4"/></svg>
+                    </div>
+                    </div>
+                    <p class="font-syne text-3xl font-extrabold text-slate-800">2</p>
+                    <span class="mt-1 inline-block text-xs font-semibold bg-green-50 text-green-700 px-2 py-0.5 rounded-md">Submitted</span>
+                </div>
+                <div class="bg-white rounded-2xl border border-slate-200 p-5">
+                    <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Avg Score</span>
+                    <div class="w-9 h-9 rounded-xl bg-purple-50 flex items-center justify-center text-purple-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity-icon lucide-activity size-5"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>
+                    </div>
+                    </div>
+                    <p class="font-syne text-3xl font-extrabold text-slate-800">82</p>
+                    <span class="mt-1 inline-block text-xs font-semibold bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full">/ 100</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 fade-up fade-up-4">
+                <div class="w-full lg:col-span-3">
+                    <div class="bg-white rounded-xl shadow-xl max-w-5xl border border-slate-200">
+                        <div class="px-6 py-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div>
+                                <h3 class="font-black text-slate-900 uppercase tracking-tight">Assignment</h3>
+                                <p class=" text-sm text-slate-500">Click any row to view detailed feedback</p>
+                            </div>
+                        </div>
+                        <div class="block overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="bg-slate-50/50 text-slate-400 text-[10px] font-black uppercase tracking-widest">
+                                    <tr>
+                                        <th class="px-8 py-5 border-b border-slate-100">Title</th>
+                                        <th class="px-8 py-5 border-b border-slate-100">Course</th>
+                                        <th class="px-8 py-5 border-b border-slate-100">Due Date</th>
+                                        <th class="px-8 py-5 border-b border-slate-100">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                {% for course in courses %}
+                                    <tr class="hover:bg-slate-50 transition-colors cursor-pointer"
+                                        onclick="navigateToCourse(`{% url 'course_details' course.id %}`)"
+                                        tabindex="0"
+                                    >
+                                        <td class="px-8 py-5 border-b border-slate-100 font-semibold">{{ course.title }}</td>
+                                        <td class="px-8 py-5 border-b border-slate-100">{{ course.instructor.user.get_full_name }}</td>
+                                        <td class="px-8 py-5 border-b border-slate-100">{{ course.course_code }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN ──────────────────────────────────── -->
+                <div class="lg:col-span-2 flex flex-col gap-6">
+
+                    <!-- RECENT SCORES -->
+                    <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                        <div class="px-5 py-4 border-b border-slate-100">
+                            <p class="font-syne text-xs font-bold uppercase tracking-widest text-slate-400">Recent Scores</p>
+                            <p class="font-syne font-extrabold text-slate-800 text-base mt-0.5">Grades</p>
+                        </div>
+                        <div class="p-5 space-y-4">
+                            <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-sm font-semibold text-slate-700">Statistics: Probability</span>
+                                <span class="font-syne font-extrabold text-brand-600 text-sm">82<span class="text-slate-300 font-normal">/100</span></span>
+                            </div>
+                            <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                                <div class="progress-bar h-full bg-brand-600 rounded-full" style="--w:82%;"></div>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-1">Graded by M. George · Dec 12</p>
+                            </div>
+                        </div>
+                        <div class="px-5 pb-4">
+                            <a href="#" class="w-full text-center block text-xs font-bold text-brand-600 hover:underline">View all grades →</a>
+                        </div>
+                    </div>
+
+                    <!-- COURSE MATERIALS -->
+                    <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                        <div class="px-5 py-4 border-b border-slate-100">
+                            <p class="font-syne text-xs font-bold uppercase tracking-widest text-slate-400">Materials</p>
+                            <p class="font-syne font-extrabold text-slate-800 text-base mt-0.5">Course Materials</p>
+                        </div>
+                        <div class="divide-y divide-slate-100">
+                            <div class="flex items-center gap-3 px-5 py-3.5 hover:bg-slate-50 transition cursor-pointer group">
+                                <div class="w-9 h-9 rounded-xl bg-red-50 flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-semibold text-slate-700 group-hover:text-brand-600 transition truncate">Algebra Lecture Notes</p>
+                                    <p class="text-xs text-slate-400">PDF · Uploaded Dec 5</p>
+                                </div>  
+                                <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-600 transition flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            </div>
+                        <div class="flex items-center gap-3 px-5 py-3.5 hover:bg-slate-50 transition cursor-pointer group">
+                            <div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
+                                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-semibold text-slate-700 group-hover:text-brand-600 transition truncate">Calculus Study Guide</p>
+                                <p class="text-xs text-slate-400">DOCX · Uploaded Dec 8</p>
+                            </div>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-brand-600 transition flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        </div>
+                    </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+        {% endif %}
     </section>
 </body>

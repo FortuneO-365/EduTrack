@@ -16,9 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .views import redirect_to_login
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls'))
+    path('api/', include('api.urls')),
+    path('', redirect_to_login, name='redirect_to_login'),
 ]
+
+handler404 = 'backend.views.custom_404_view'
+

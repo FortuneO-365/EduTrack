@@ -17,7 +17,7 @@ class UserProfile(models.Model):
 class StudentProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     matric_number = models.CharField(max_length=50, unique=True, editable=False)
-    #profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True) # to be changed later to azure blob storage
+    profile_image_url = models.TextField(null=True, blank=True)
     
     def save(self, *args, **kwargs):
         if not self.matric_number:
@@ -32,6 +32,7 @@ class StudentProfile(models.Model):
 class InstructorProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     staff_id = models.CharField(max_length=50, unique=True, editable=False)
+    profile_image_url = models.TextField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.staff_id:
@@ -44,7 +45,7 @@ class InstructorProfile(models.Model):
         return self.user.username
     
 class Course(models.Model):
-    instructor = models.ForeignKey(InstructorProfile, on_delete=models.CASCADE)
+    instructor = models.OneToOneField(InstructorProfile, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     course_code = models.CharField(max_length=20, unique=True)
     description = models.TextField()
@@ -54,8 +55,15 @@ class Course(models.Model):
     
 
 class Enrollment(models.Model):
+    STATUS_TYPE_CHOICES = [
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+    ]
+
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    status = models.CharField(max_length=10, choices=STATUS_TYPE_CHOICES, default='pending')
     enrollment_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -74,22 +82,37 @@ class Materials(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     uploaded_by = models.ForeignKey(InstructorProfile, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
+    description = models.TextField(default="")
     file_url = models.TextField()
     file_type = models.CharField(max_length=50)
     upload_date = models.DateTimeField(auto_now_add=True)
 
 class Submission(models.Model):
+    SUBMISSION_STATUS_CHOICES = [
+        ('submitted', 'Submitted'),
+        ('graded', 'Graded')
+    ]
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
+    file = models.TextField( null=True, blank=True)
     file_url = models.TextField()
     submission_date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=10, choices=SUBMISSION_STATUS_CHOICES, default='submitted')
 
     class Meta:
         unique_together = ('assignment', 'student')
-
 
 class Scores(models.Model):
     submission = models.OneToOneField(Submission, on_delete=models.CASCADE)
     graded_by = models.ForeignKey(InstructorProfile, on_delete=models.SET_NULL, null=True)
     score = models.DecimalField(max_digits=5, decimal_places=2)
     feedback = models.TextField()
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Notification for {self.user.username}"

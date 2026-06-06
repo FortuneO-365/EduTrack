@@ -22,9 +22,28 @@ urlpatterns = [
     path('courses/<int:course_id>/details/', get_course_details, name='course_details'),
     path('courses/instructor/', get_instructor_course, name='instructor_course'),
     path('courses/student/', get_student_courses, name='student_courses'),
-    # path('courses/<int:course_id>/enroll/', enroll_in_course, name='enroll_course'),
-    path('courses/<int:pk>/', modify_course, name='get_course'),
-    path('courses/create/', create_course, name='create_course'),
+    path('courses/<int:course_id>/create/', create_course, name='create_course'),
+
+
+    #enrollment endpoints
+    path('course/enrollments/', get_enrollments, name='course_enrollments'),
+    path('courses/<int:course_id>/enroll/', course_enrollment, name='enroll_course'),
+    path('courses/enrollments/<int:enrollment_id>/accept', accept_enrollment, name='accept_enrollment'),
+    path('courses/enrollments/<int:enrollment_id>/reject', reject_enrollment, name='reject_enrollment'),
+
+
+    #assignment endpoints
+    # path('courses/<int:course_id>/assignments/', get_assignments, name='get_assignments'),
+    path('courses/<int:course_id>/assignments/instructor/', get_instructor_assignments, name='instructor_assignments'),
+    path('courses/assignments/student/', get_student_assignments, name='student_assignments'),
+
+    #grade endpoints
+    path('courses/grades/student/', get_student_grades, name='student_grades'),
+    # path('courses/<int:course_id>/grades/grades, name='get_grades'),
+
+
+    # path('courses/<int:pk>/', modify_course, name='get_course'),
+    # path('courses/create/', create_course, name='create_course'),
 
 
 

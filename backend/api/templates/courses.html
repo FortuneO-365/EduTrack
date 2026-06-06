@@ -7,7 +7,7 @@
     <title>Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body class="min-h-screen bg-slate-50">
+<body class="min-h-screen bg-slate-50 relative" id="body">
     <header class="sticky top-0 left-0 right-0 z-50 bg-white">
         <nav class="px-2 md:px-6 border-b border-slate-200 w-full shadow-sm">
             <div class="mx-auto flex items-center justify-between p-2">
@@ -17,22 +17,27 @@
                     </div>
                     <h2 class="text-xl font-semibold text-slate-950">EduTrack</h2>
                 </div>
-                <a href="{% url 'user_profile' %}" class="block cursor-pointer hover:shadow">
-                    <div class="flex items-center gap-4 p-2">
-                        <div class=" flex flex-col">
-                            <p class=" text-end">
-                                {{request.user.first_name}} {{request.user.last_name}}
-                            </p>
-                            <p class=" text-end capitalize text-slate-500 text-xs">
-                                {{ user_type|default:"Student" }}
-                            </p>
+                <div class=" flex gap-4 items-center">
+                    <a href="{% url 'user_profile' %}" class="block cursor-pointer rounded-md hover:shadow">
+                        <div class="flex items-center gap-4 p-2">
+                            <div class=" flex flex-col">
+                                <p class=" text-end">
+                                    {{request.user.first_name}} {{request.user.last_name}}
+                                </p>
+                                <p class=" text-end capitalize text-slate-500 text-xs">
+                                    {{ user_type|default:"Student" }}
+                                </p>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-icon lucide-circle-user size-7"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+                            </div>
+                            
                         </div>
-                        <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-icon lucide-circle-user size-7"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
-                        </div>
-                        
-                    </div>
-                </a>
+                    </a>
+                    <button class="flex items-center justify-center p-2 rounded-md hover:shadow text-slate-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
+                    </button>
+                </div>
             </div>
         </nav>
     </header>
@@ -54,6 +59,10 @@
                 <a href="" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-500">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-list-icon lucide-clipboard-list size-8"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
                     <p class="text-xs font-semibold">ASSIGNMENTS</p>
+                </a>
+                <a href="{%url 'user_profile'%}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings size-8"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>
+                    <p class="text-xs font-semibold">SETTINGS</p>
                 </a>
             </nav>
             <div class="pt-4 border-t border-slate-100">
@@ -95,7 +104,7 @@
                             {% for course in courses %}
                                 <tr
                                     class="hover:bg-slate-50 transition-colors cursor-pointer"
-                                    onclick="{window.location=`{% url 'course_details' course.id %}`}"
+                                    onclick="navigateToCourse(`{% url 'course_details' course.id %}`)"
                                     tabindex="0"
                                 >
                                     <td class="px-8 py-5 border-b border-slate-100 font-semibold">{{ course.title }}</td>
@@ -103,9 +112,23 @@
                                     <td class="px-8 py-5 border-b border-slate-100">{{ course.instructor.user.get_full_name }}</td>
                                     <td class="px-8 py-5 border-b border-slate-100">
                                         <div class="flex gap-2 items-center justify-end">
-                                            <button class="p-2 text-slate-500 rounded-md hover:shadow-sm">
+                                            {% if not course.is_enrolled %}
+                                            <button
+                                                type="button"
+                                                class="p-2 text-slate-500 rounded-md hover:shadow-sm"
+                                                onclick="enrollToCourse(event, this, `{% url 'enroll_course' course.id %}`)"
+                                            >
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-plus-icon lucide-user-plus size-4"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
                                             </button>
+                                            {% else %}
+                                            <button
+                                                type="button"
+                                                class="p-2 text-slate-500 rounded-md hover:shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                                                disabled
+                                            > 
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-check-icon lucide-user-check size-4"><path d="m16 11 2 2 4-4"/><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                                            </button>
+                                            {% endif %}
                                         </div>
                                     </td>
                                 </tr>
@@ -118,3 +141,61 @@
         </main>
     </section>
 </body>
+<script>
+    const body = document.getElementById('body');
+
+    function navigateToCourse(courseUrl){
+        window.location = courseUrl;
+    }
+
+    function showPopupBox(message){
+        const div = document.createElement('div');
+        div.innerHTML = message;
+        div.id = 'newDiv'
+        div.classList.add('fixed')
+        div.classList.add('p-4')
+        div.classList.add('bg-white')
+        div.classList.add('z-10')
+        div.classList.add('top-20')
+        div.classList.add('left-1/2')
+        div.classList.add('-translate-x-1/2')
+        div.classList.add('rounded-md')
+        div.classList.add('shadow-md')
+        body.appendChild(div);
+
+        setTimeout(() => {
+            body.removeChild(div);
+        }, 3000)
+    }
+
+    async function enrollToCourse(event, button, enrollUrl) {
+        event.stopPropagation();
+        button.disabled = true;
+        button.classList.add('opacity-50', 'cursor-not-allowed');
+
+        try {
+            const response = await fetch(enrollUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'same-origin',
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Unable to enroll in this course.');
+            }
+
+            showPopupBox(data.message || 'Course enrolled successfully!');
+        } catch (error) {
+            button.disabled = false;
+            button.classList.remove('opacity-50', 'cursor-not-allowed');
+            showPopupBox(error.message);
+        }
+
+    }
+</script>
+</html>

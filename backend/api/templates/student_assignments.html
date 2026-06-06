@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="min-h-screen bg-slate-50 relative" id="body">
+    <header class="sticky top-0 left-0 right-0 z-50 bg-white">
+        <nav class="px-2 md:px-6 border-b border-slate-200 w-full shadow-sm">
+            <div class="mx-auto flex items-center justify-between p-2">
+                <div class=" flex items-center">
+                    <div>
+                        <img src="{% static 'assets/logo.png' %}" alt="EduTrack logo" class="size-12">
+                    </div>
+                    <h2 class="text-xl font-semibold text-slate-950">EduTrack</h2>
+                </div>
+                <div class=" flex gap-4 items-center">
+                    <a href="{% url 'user_profile' %}" class="block cursor-pointer rounded-md hover:shadow">
+                        <div class="flex items-center gap-4 p-2">
+                            <div class=" flex flex-col">
+                                <p class=" text-end">
+                                    {{request.user.first_name}} {{request.user.last_name}}
+                                </p>
+                                <p class=" text-end capitalize text-slate-500 text-xs">
+                                    {{ user_type|default:"Student" }}
+                                </p>
+                            </div>
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-icon lucide-circle-user size-7"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+                            </div>
+                            
+                        </div>
+                    </a>
+                    <button class="flex items-center justify-center p-2 rounded-md hover:shadow text-slate-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section class=" flex flex-1">
+        <aside class=" sticky top-18 h-[calc(100vh-72px)] w-32 bg-white border-r border-slate-200 p-3 hidden md:flex flex-col justify-between">
+            <nav class="space-y-4 flex-1 overflow-y-auto custom-scrollbar pr-1">
+                <a href="{% url 'student_dashboard' %}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard size-8"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                    <p class="text-xs font-semibold">HOME</p>
+                </a>
+                <a href="{% url 'student_courses' %}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-text-icon lucide-book-open-text size-8"><path d="M12 7v14"/><path d="M16 12h2"/><path d="M16 8h2"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/><path d="M6 12h2"/><path d="M6 8h2"/></svg>
+                    <p class="text-xs font-semibold">COURSES</p>
+                </a>
+                <a href="{% url 'student_grades' %}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star-icon lucide-star size-8"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg>
+                    <p class="text-xs font-semibold">GRADES</p>
+                </a>
+                <a href="{% url 'student_assignments' %}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full bg-blue-500 text-white shadow-lg shadow-blue-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-list-icon lucide-clipboard-list size-8"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+                    <p class="text-xs font-semibold">ASSIGNMENTS</p>
+                </a>
+                <a href="{%url 'user_profile'%}" class="flex flex-col justify-center items-center p-4 rounded-2xl transition-all duration-200 group text-center w-full text-slate-500 hover:bg-blue-50 hover:text-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings size-8"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>
+                    <p class="text-xs font-semibold">SETTINGS</p>
+                </a>
+            </nav>
+            <div class="pt-4 border-t border-slate-100">
+                <a href="{% url 'logout_view' %}" class="flex flex-col items-center justify-center p-4 w-full text-red-500 hover:bg-red-50 rounded-2xl transition group">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+                    <p class="text-xs font-semibold">Logout</p>
+                </a>
+            </div>
+        </aside>
+        <main class="flex-1 p-6 md:p-8 overflow-y-auto pb-24 md:pb-8">
+            <div class="max-w-5xl mx-auto">
+                <div class="max-w-7xl mx-auto space-y-8 pb-10 px-4 sm:px-0">
+                    <div>
+                        <span class="text-[10px] font-black text-blue-600 bg-blue-50 px-3 py-1 rounded-full uppercase tracking-[0.2em] mb-3 inline-block">Content Management</span>
+                        <h1 class="text-4xl font-bold text-slate-800 tracking-tight">My Assignments</h1>
+                        <p class="text-slate-500 mt-1 font-medium">View and submit your course assignments</p>
+                    </div>
+
+                    <div>
+                        <div class="flex gap-1 bg-white border border-slate-200 rounded-md p-1 w-fit mb-6">
+                            <button class="py-2 px-5 rounded-md text-sm font-semibold pointer bg-none text-muted transition-colors tab bg-blue-500 text-white" onclick="switchTab('all',this)">All</button>
+                            <button class="py-2 px-5 rounded-md text-sm text-slate-500 font-semibold pointer bg-none text-muted transition-colors tab hover:bg-blue-100 hover:text-blue-500" onclick="switchTab('pending',this)">Pending</button>
+                            <button class="py-2 px-5 rounded-md text-sm text-slate-500 font-semibold pointer bg-none text-muted transition-colors tab hover:bg-blue-100 hover:text-blue-500" onclick="switchTab('submitted',this)">Submitted</button>
+                            <button class="py-2 px-5 rounded-md text-sm text-slate-500 font-semibold pointer bg-none text-muted transition-colors tab hover:bg-blue-100 hover:text-blue-500" onclick="switchTab('graded',this)">Graded</button>
+                        </div>
+
+
+                        <div class="flex flex-col gap-3.5" id="asgn-list">
+
+                            <div class="bg-white border border-slate-200 rounded-md py-5 px-6 flex flex-col md:flex-row items-center gap-4.5 transition-all hover:shadow-xs hover:-translate-y-[1px]" data-status="pending">
+                                <div class="flex-1">
+                                    <div class="text-lg font-bold mb-1.5">Calculus: Differentiation</div>
+                                    <div class="text-slate-500 text-md mb-3">Complete exercises on basic and chain rule differentiation. Include full derivation steps for each problem.</div>
+                                    <div class="flex gap-2 items-center flex-wrap">
+                                        <span class="inline-flex items-center gap-1 text-xs font-semibold py-1 px-2.5 rounded-md bg-amber-100 text-amber-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-days-icon lucide-calendar-days size-4"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+                                            Due: Dec 28, 2025
+                                        </span>
+                                        <span class="inline-flex items-center gap-1 text-xs font-semibold py-1 px-2.5 rounded-md text-slate-500 bg-slate-100">Mathematics</span>
+                                        <span class="inline-flex items-center gap-1 text-xs font-semibold py-1 px-2.5 rounded-md bg-blue-100 text-blue-500">Submitted</span>
+                                        
+                                    </div>
+                                </div>
+                                <div class="flex flex-row md:flex-col items-end gap-2.5 shrink-0">
+                                    <button class="inline-flex items-center gap-2 bg-blue-500 text-white rounded-md py-2.5 px-4.5 text-sm font-semibold pointer transiton-colors hover:bg-blue-600" onclick="openSubmitModal('Calculus: Differentiation')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload-icon lucide-upload size-4"><path d="M12 3v12"/><path d="m17 8-5-5-5 5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg>
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </section>
+</body>
+</html>
+
+

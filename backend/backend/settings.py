@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+import pymysql
+pymysql.install_as_MySQLdb()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-diyn8puj$ogk%v!l2g4t$q6c$je2wd*0ts$u5pxtm9*n@l=49d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -41,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'api.apps.ApiConfig',
+    'storages',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -87,16 +92,14 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 #     }
 # }
 
-import pymysql
-pymysql.install_as_MySQLdb()
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "edutrack_db",
-        "USER": "root",
-        "PASSWORD": "root",
-        "HOST": "localhost",
-        "PORT": "3306"
+        "NAME": config("DB_NAME"),
+        "USER": config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST"),
+        "PORT": config("DB_PORT")
     }
 }
 
@@ -135,14 +138,34 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Azure Blob Storage Configuration
-DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
-AZURE_ACCOUNT_NAME = 'your_account_name'
-AZURE_ACCOUNT_KEY = 'your_account_key'
-AZURE_CONTAINER = 'edutrack-uploads'
+# DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+AZURE_ACCOUNT_KEY = config("AZURE_ACCOUNT_KEY")
+AZURE_CONNECTION_STRING = config("AZURE_CONNECTION_STRING")
+AZURE_ACCOUNT_NAME = config("AZURE_ACCOUNT_NAME")
+AZURE_CONTAINER = config("AZURE_CONTAINER")
 
+
+STORAGES = {
+    "default": {
+        # Media files (user uploads like profile images, PDFs)
+        "BACKEND": "storages.backends.azure_storage.AzureStorage",
+        "OPTIONS": {
+            "connection_string": AZURE_CONNECTION_STRING,
+            "azure_container": AZURE_CONTAINER,
+            "overwrite_files": True,  # replace file if same name uploaded
+        },
+    },
+    "staticfiles": {
+        # Keep static files local for now (CSS, JS)
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+
+MEDIA_URL = f"https://{AZURE_ACCOUNT_NAME}.blob.core.windows.net/{AZURE_CONTAINER}/"
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
