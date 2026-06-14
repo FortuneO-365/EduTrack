@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 from decouple import config
 import pymysql
+import os
 pymysql.install_as_MySQLdb()
 
 
@@ -24,12 +25,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-diyn8puj$ogk%v!l2g4t$q6c$je2wd*0ts$u5pxtm9*n@l=49d'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = [
+    config('WEBSITE_HOSTNAME', default=''),
+    "127.0.0.1", 
+    "localhost"
+]
 
 
 # Application definition
@@ -52,8 +57,9 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -85,13 +91,6 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
@@ -99,7 +98,10 @@ DATABASES = {
         "USER": config("DB_USER"),
         "PASSWORD": config("DB_PASSWORD"),
         "HOST": config("DB_HOST"),
-        "PORT": config("DB_PORT")
+        "PORT": config("DB_PORT"),
+        'OPTIONS' : {
+            'ssl': {'ssl-mode': 'REQUIRED'}, 
+        },
     }
 }
 
@@ -139,9 +141,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Azure Blob Storage Configuration
-# DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
 AZURE_ACCOUNT_KEY = config("AZURE_ACCOUNT_KEY")
 AZURE_CONNECTION_STRING = config("AZURE_CONNECTION_STRING")
 AZURE_ACCOUNT_NAME = config("AZURE_ACCOUNT_NAME")
@@ -174,3 +177,7 @@ REST_FRAMEWORK = {
 }
 
 LOGIN_URL = 'login_page'
+
+CSRF_TRUSTED_ORIGINS = [
+    f"https://{config('WEBSITE_HOSTNAME', default='localhost')}"
+]
