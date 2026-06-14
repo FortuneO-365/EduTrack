@@ -31,7 +31,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    config('WEBSITE_HOSTNAME', default=''),
+    config('WEBSITE_MAIN_HOSTNAME', default=''),
     "127.0.0.1", 
     "localhost"
 ]
