@@ -45,9 +45,21 @@ class EnrollmentSerializer(serializers.ModelSerializer):
         ]
 
 class AssignmentSerializer(serializers.ModelSerializer):
+    course_name = serializers.CharField(source='course.title', read_only=True)
+    due_date = serializers.DateTimeField(
+        format="%b %d, %Y - %I:%M %p"
+    )
     class Meta:
         model = Assignment
-        fields = '__all__'
+        fields = [
+            'id',
+            'title',
+            'description',
+            'created_at',
+            'due_date',
+            'course',
+            'course_name'
+        ]
 
 class MaterialsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -55,9 +67,21 @@ class MaterialsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class SubmissionSerializer(serializers.ModelSerializer):
+    student = serializers.CharField(source='student.user.username', read_only=True)
+    submission_date = serializers.DateTimeField(
+        format="%b %d, %Y - %I:%M %p"
+    )
     class Meta:
         model = Submission
-        fields = '__all__'
+        fields = [
+            'id',
+            'assignment',
+            'student',
+            'file_name',
+            'file_url',
+            'submission_date',
+            'status',
+        ]
 
 class ScoresSerializer(serializers.ModelSerializer):
     class Meta:

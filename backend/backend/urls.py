@@ -25,5 +25,7 @@ urlpatterns = [
     path('', redirect_to_login, name='redirect_to_login'),
 ]
 
+handler401 = 'backend.views.custom_401_view'
+handler403 = 'backend.views.custom_403_view'
 handler404 = 'backend.views.custom_404_view'
 

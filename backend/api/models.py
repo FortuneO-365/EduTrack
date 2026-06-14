@@ -53,7 +53,6 @@ class Course(models.Model):
     def __str__(self):
         return self.title
     
-
 class Enrollment(models.Model):
     STATUS_TYPE_CHOICES = [
         ('pending', 'Pending'),
@@ -73,8 +72,6 @@ class Assignment(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    file_url = models.TextField()
-    file_type = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     due_date = models.DateTimeField()
 
@@ -83,8 +80,9 @@ class Materials(models.Model):
     uploaded_by = models.ForeignKey(InstructorProfile, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField(default="")
+    file_name = models.TextField(default="")
     file_url = models.TextField()
-    file_type = models.CharField(max_length=50)
+    file_type = models.CharField(max_length=100)
     upload_date = models.DateTimeField(auto_now_add=True)
 
 class Submission(models.Model):
@@ -94,7 +92,7 @@ class Submission(models.Model):
     ]
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
-    file = models.TextField( null=True, blank=True)
+    file_name = models.TextField( null=True, blank=True)
     file_url = models.TextField()
     submission_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=SUBMISSION_STATUS_CHOICES, default='submitted')

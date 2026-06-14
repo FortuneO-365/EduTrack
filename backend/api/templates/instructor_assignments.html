@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>EduTrack - Instructor Assignment </title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body class="min-h-screen bg-slate-50">
@@ -17,27 +17,22 @@
                     </div>
                     <h2 class="text-xl font-semibold text-slate-950">EduTrack</h2>
                 </div>
-                <div class=" flex gap-4 items-center">
-                    <a href="{% url 'user_profile' %}" class="block cursor-pointer rounded-md hover:shadow">
-                        <div class="flex items-center gap-4 p-2">
-                            <div class=" flex flex-col">
-                                <p class=" text-end">
-                                    {{request.user.first_name}} {{request.user.last_name}}
-                                </p>
-                                <p class=" text-end capitalize text-slate-500 text-xs">
-                                    {{ user_type|default:"Student" }}
-                                </p>
-                            </div>
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-icon lucide-circle-user size-7"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
-                            </div>
-                            
+                <a href="{% url 'user_profile' %}" class="block cursor-pointer rounded-md hover:shadow">
+                    <div class="flex items-center gap-4 p-2">
+                        <div class=" flex flex-col">
+                            <p class=" text-end">
+                                {{request.user.first_name}} {{request.user.last_name}}
+                            </p>
+                            <p class=" text-end capitalize text-slate-500 text-xs">
+                                {{ user_type|default:"Student" }}
+                            </p>
                         </div>
-                    </a>
-                    <button class="flex items-center justify-center p-2 rounded-md hover:shadow text-slate-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
-                    </button>
-                </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-icon lucide-circle-user size-7"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+                        </div>
+                        
+                    </div>
+                </a>
             </div>
         </nav>
     </header>
@@ -86,85 +81,42 @@
                         </button>
                     </div>
 
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-4" id="asgn-grid">
-
-                        <div class="bg-white border border-slate-200 rounded-md overflow-hidden hover:shadow-md hover:-translate-y-1" data-title="Introduction to Algebra" data-status="open">
-                            <div class="p-4">
-                            <div class="font-bold text-2xl mb-3">Introduction to Algebra</div>
-                            <div class="mb-4 text-slate-600">Solve 20 algebra problems covering linear equations and inequalities. Show all working steps clearly.</div>
-                            </div>
-                            <div class="flex gap-2 p-4">
-                            <span class="inline-flex items-center gap-1 text-xs rounded-sm font-semibold py-1 px-2.5 bg-amber-100 text-amber-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-icon lucide-calendar size-3"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
-                                Due: Dec 20, 2025
-                            </span>
-                            <span class="inline-flex items-center gap-1 text-xs rounded-sm font-semibold py-1 px-2.5 bg-blue-100 text-blue-500">
-                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                                PDF
-                            </span>
-                            <span class="inline-flex items-center gap-1 text-xs rounded-sm font-semibold py-1 px-2.5 bg-green-100 text-green-500">Open</span>
-                            </div>
-                            <div class="border-t border-slate-200 py-3 py-4.5 flex items-center justify-between bg-slate-50 px-2">
-                            <div class="text-sm text-slate-500"><strong class="text-black">1</strong> / 1 submitted</div>
-                            <div class="flex gap-2 items-center">
-                                <button class="py-1.5 px-3.5 rounded-sm text-sm font-semibold pointer transition-all  bg-emerald-100 text-emerald-500 hover:bg-emerald-200" onclick="openDrawer('Introduction to Algebra')">Grade</button>
-                                <button class="py-1.5 px-3.5 rounded-sm text-sm font-semibold pointer transition-all  bg-blue-100 text-blue-500 hover:bg-blue-200">Edit</button>
-                                <button class="py-1.5 px-3.5 rounded-sm text-sm font-semibold pointer transition-all  bg-red-100 text-red-500 hover:bg-red-200">Delete</button>
-                            </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white border border-slate-200 rounded-md overflow-hidden hover:shadow-md hover:-translate-y-1" data-title="Calculus: Differentiation" data-status="open">
-                            <div class="p-4">
-                            <div class="font-bold text-2xl mb-3">Calculus: Differentiation</div>
-                            <div class="mb-4 text-slate-600">Complete exercises on basic and chain rule differentiation. Include full derivation steps.</div>
-                            </div>
-                            <div class="flex gap-2 p-4">
-                            <span class="inline-flex items-center gap-1 text-xs rounded-sm font-semibold py-1 px-2.5 bg-amber-100 text-amber-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-icon lucide-calendar size-3"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
-                                Due: Dec 28, 2025
-                            </span>
-                            <span class="inline-flex items-center gap-1 text-xs rounded-sm font-semibold py-1 px-2.5 bg-blue-100 text-blue-500">DOCX</span>
-                            <span class="inline-flex items-center gap-1 text-xs rounded-sm font-semibold py-1 px-2.5 bg-green-100 text-green-500">Open</span>
+                    {% if assignments %}
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="asgn-grid">
+                    {% for assignment in assignment_stats %}
+                        <div class="bg-white border border-slate-200 rounded-md overflow-hidden hover:shadow-md hover:-translate-y-1 flex flex-col">
+                            <div class="flex-1 flex flex-col">
+                                <div class="p-4 flex-1">
+                                    <div class="font-bold text-2xl mb-3">{{assignment.assignment.title}}</div>
+                                    <div class="mb-4 text-slate-600">{{assignment.assignment.description}}</div>
+                                </div>
+                                <div class="flex gap-2 p-4 items-center">
+                                    <span class="inline-flex items-center gap-1 text-xs rounded-sm font-semibold py-1 px-2.5 bg-amber-100 text-amber-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-icon lucide-calendar size-3"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+                                        {{assignment.assignment.due_date}}
+                                    </span>
+                                    {% if today > assignment.assignment.due_date %}
+                                    <div>
+                                        <span class="text-xs rounded-sm font-semibold py-1 px-2.5 bg-slate-100 text-slate-500">
+                                            Expired
+                                        </span>
+                                    </div>
+                                    {% endif %}
+    
+                                </div>
                             </div>
                             <div class="border-t border-slate-200 py-3 py-4.5 flex items-center justify-between bg-slate-50 px-2">
-                            <div class="text-sm text-slate-500"><strong class="text-black">1</strong> / 1 submitted</div>
-                            <div class="flex gap-2 items-center">
-                                <button class="py-1.5 px-3.5 rounded-sm text-sm font-semibold pointer transition-all  bg-emerald-100 text-emerald-500 hover:bg-emerald-200" onclick="openDrawer('Calculus: Differentiation')">Grade</button>
-                                <button class="py-1.5 px-3.5 rounded-sm text-sm font-semibold pointer transition-all  bg-blue-100 text-blue-500 hover:bg-blue-200">Edit</button>
-                                <button class="py-1.5 px-3.5 rounded-sm text-sm font-semibold pointer transition-all  bg-red-100 text-red-500 hover:bg-red-200">Delete</button>
-                            </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white border border-slate-200 rounded-md overflow-hidden hover:shadow-md hover:-translate-y-1" data-title="Statistics: Probability" data-status="closed">
-                            <div class="p-4">
-                            <div class="font-bold text-2xl mb-3">Statistics: Probability</div>
-                            <div class="mb-4 text-slate-600">Answer questions on probability theory, Bayes theorem, and normal distribution. Submit as PDF.</div>
-                            </div>
-                            <div class="flex gap-2 p-4">
-                            <span class="inline-flex items-center gap-1 text-xs rounded-sm font-semibold py-1 px-2.5 bg-amber-100 text-amber-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-icon lucide-calendar size-3"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
-                                Due: Dec 10, 2025
-                            </span>
-                            <span class="inline-flex items-center gap-1 text-xs rounded-sm font-semibold py-1 px-2.5 bg-blue-100 text-blue-500">PDF</span>
-                            <span class="inline-flex items-center gap-1 text-xs rounded-sm font-semibold py-1 px-2.5" style="background:#F1F5F9;color:#475569;">Closed</span>
-                            </div>
-                            <div class="border-t border-slate-200 py-3 py-4.5 flex items-center justify-between bg-slate-50 px-2">
-                            <div class="text-sm text-slate-500"><strong class="text-black">0</strong> / 1 submitted</div>
-                            <div class="flex gap-2 items-center">
-                                <button class="py-1.5 px-3.5 rounded-sm text-sm font-semibold pointer transition-all  bg-blue-100 text-blue-500 hover:bg-blue-200">View</button>
-                                <button class="py-1.5 px-3.5 rounded-sm text-sm font-semibold pointer transition-all  bg-red-100 text-red-500 hover:bg-red-200">Delete</button>
-                            </div>
+                                <div class="text-sm text-slate-500"><strong class="text-black">{{assignment.submission_count}}</strong> / {{total_students}} submitted</div>
+                                <div class="flex gap-2 items-center">
+                                    <button class="py-1.5 px-3.5 rounded-sm text-sm font-semibold pointer transition-all  bg-emerald-100 text-emerald-500 hover:bg-emerald-200" onclick="openDrawer('{{assignment.assignment.title }}', `{% url 'assignment_submissions' assignment.assignment.id  %}`)">Grade</button>
+                                    <button class="py-1.5 px-3.5 rounded-sm text-sm font-semibold pointer transition-all  bg-blue-100 text-blue-500 hover:bg-blue-200" onclick="openEditModal(`{% url 'assignment_details' assignment.assignment.id %}`)">Edit</button>
+                                    <button class="py-1.5 px-3.5 rounded-sm text-sm font-semibold pointer transition-all  bg-red-100 text-red-500 hover:bg-red-200" onclick="showConfirmationPage('{{assignment.assignment.id}}')">Delete</button>
+                                </div>
                             </div>
                         </div>
-
+                    {% endfor %}
                     </div>
-                    <!-- {% if assignments %}
-                    {% for assignment in assignments %} -->
-
-                    <!-- {% endfor %}
-                    {% else %}
+                    {% else %} 
                     <div class="text-center text-slate-500 flex flex-col items-center justify-center mt-10">
                         <p>
                             You don't have any assignments yet.
@@ -172,50 +124,83 @@
                         <button class="text-blue-500" onclick="openModal()">Create Assignment</button>
                     </div>
 
-                    {% endif %} -->
+                    {% endif %}
 
                 </div>
             </div>
         </main>
+        <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-6 py-3 flex justify-between items-center z-50">
+            <a href="{% url 'instructor_dashboard' %}" class="flex flex-col items-center transition-colors text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg>
+                <span class="text-[10px] font-bold mt-1 uppercase">Home</span>
+            </a>
+            <a href="{% url 'instructor_course' %}" class="flex flex-col items-center transition-colors text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-text-icon lucide-book-open-text"><path d="M12 7v14"/><path d="M16 12h2"/><path d="M16 8h2"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/><path d="M6 12h2"/><path d="M6 8h2"/></svg>
+                <span class="text-xs font-semibold">COURSE<span>
+            </a>
+            <a href="{% url 'course_enrollments' %}" class="flex flex-col items-center transition-colors text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-plus-icon lucide-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+                <span class="text-xs font-semibold">ENROLLMENTS</span>
+            </a>          
+            <div class="hidden absolute bottom-20 right-6 bg-white border border-slate-200 rounded-2xl shadow-xl w-48 p-2 animate-in fade-in slide-in-from-bottom-4 duration-200" id="box">
+                <a href="{% url 'instructor_assignments' course.id %}" class="flex items-center space-x-3 w-full p-3 rounded-xl transition text-slate-600 hover:bg-slate-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-list-icon lucide-clipboard-list "><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+                    <span class="text-xs font-semibold">ASSIGNMENTS</span>
+                </a>
+                <a href="{% url 'user_profile'%}" class="flex items-center space-x-3 w-full p-3 rounded-xl transition text-slate-600 hover:bg-slate-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>
+                    <span class="text-xs font-semibold">SETTINGS</span>
+                </a>
+                <div class="my-1 border-t border-slate-100"></div>
+                <a href="{% url 'logout_view' %}" class="flex items-center space-x-3 w-full p-3 text-red-500 hover:bg-red-50 rounded-xl transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out" aria-hidden="true"><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path></svg>
+                    <span class="font-semibold text-sm">Logout</span>
+                </a>
+            </div>
+            <button class="flex flex-col items-center transition-colors text-blue-600" onclick="openbox()" id="more-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis" aria-hidden="true"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                <span class="text-[10px] font-bold mt-1 uppercase">More</span>
+            </button>
+        </div>
     </section>
 
     <div class="hidden flex fixed inset-0 bg-[rgba(0,0,0,.45)] z-[200] items-center justify-center" id="assignment-modal">
         <div class="bg-white rounded-md w-full max-w-[560px] p-8 shadow-xl">
-            <div class="text-xl font-bold mb-5.5 flex items-center justify-between">
+            <div class="text-xl font-bold mb-5.5 flex items-center justify-between" id="modal-header">
                 New Assignment
                 <button class="bg-none pointer text-slate-500 hover:text-black text-xl" onclick="closeModal()">✕</button>
             </div>
             <div class="mb-4.5">
                 <label class="font-semibold uppercase mb-1.5 block text-slate-500 text-sm">Assignment Title</label>
-                <input class="w-full py-2.5 px-3.5 border-1 outline-none bg-slate-50 border-slate-200 rounded-md focus:border-blue-500 focus:bg-white text-sm" type="text" placeholder="e.g. Introduction to Algebra"/>
+                <input 
+                    class="w-full py-2.5 px-3.5 border-1 outline-none bg-slate-50 border-slate-200 rounded-md focus:border-blue-500 focus:bg-white text-sm" 
+                    type="text" 
+                    placeholder="e.g. Introduction to Algebra"
+                    id="assignment-title"
+                />
             </div>
             <div class="mb-4.5">
                 <label class="font-semibold uppercase mb-1.5 block text-slate-500 text-sm">Description</label>
-                <textarea class="w-full py-2.5 px-3.5 border-1 outline-none bg-slate-50 border-slate-200 rounded-md focus:border-blue-500 focus:bg-white text-sm resize-none min-h-[90px]" placeholder="Describe the assignment instructions clearly..."></textarea>
+                <textarea 
+                    class="w-full py-2.5 px-3.5 border-1 outline-none bg-slate-50 border-slate-200 rounded-md focus:border-blue-500 focus:bg-white text-sm resize-none min-h-[90px]" 
+                    placeholder="Describe the assignment instructions clearly..."
+                    
+                    id="assignment-desc"
+                ></textarea>
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div class="mb-4.5" style="margin:0">
                     <label class="font-semibold uppercase mb-1.5 block text-slate-500 text-sm">Due Date</label>
-                    <input class="w-full py-2.5 px-3.5 border-1 outline-none bg-slate-50 border-slate-200 rounded-md focus:border-blue-500 focus:bg-white text-sm" type="datetime-local"/>
-                </div>
-                <div class="mb-4.5" style="margin:0">
-                    <label class="font-semibold uppercase mb-1.5 block text-slate-500 text-sm">File Type</label>
-                    <select class="w-full py-2.5 px-3.5 border-1 outline-none bg-slate-50 border-slate-200 rounded-md focus:border-blue-500 focus:bg-white text-sm">
-                    <option value="">Select file type</option>
-                    <option value="pdf">PDF</option>
-                    <option value="docx">DOCX</option>
-                    <option value="pptx">PPTX</option>
-                    <option value="mp4">MP4</option>
-                    </select>
+                    <input 
+                        class="w-full py-2.5 px-3.5 border-1 outline-none bg-slate-50 border-slate-200 rounded-md focus:border-blue-500 focus:bg-white text-sm" 
+                        type="datetime-local"
+                        id="assignment-dueDate"
+                    />
                 </div>
             </div>
-            <div class="mb-4.5" style="margin-top:18px">
-                <label class="font-semibold uppercase mb-1.5 block text-slate-500 text-sm">Attach Resource File (optional)</label>
-                <input class="w-full py-2.5 px-3.5 border-1 outline-none bg-slate-50 border-slate-200 rounded-md focus:border-blue-500 focus:bg-white text-sm" type="url" placeholder="Paste file URL or leave blank"/>
-                </div>
             <div class="flex gap-3 justify-end mt-6">
                 <button class="py-2.5 px-4.5 border border-slate-200 rounded-md bg-none text-sm fount-semibold pointer transiton-all hover:bg-slate-200" onclick="closeModal()">Cancel</button>
-                <button class="inline-flex items-center gap-2 bg-blue-500 text-white rounded-md py-2.5 px-4.5 text-sm hover:bg-blue-600" onclick="closeModal()" style="padding:11px 22px;">Create Assignment</button>
+                <button class="inline-flex items-center gap-2 bg-blue-500 text-white rounded-md py-2.5 px-4.5 text-sm hover:bg-blue-600" onclick="createAssignment(`{% url 'create_assignment' course.id %}`)" style="padding:11px 22px;" id="">Create Assignment</button>
             </div>
         </div>
     </div>
@@ -231,7 +216,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
             </button>
         </div>
-        <div class="flex-1 py-6 px-7">
+        <div class="flex-1 py-6 px-7" id="submission-data">
             <div class="flex items-center gap-3 py-3.5 border-b border-slate-200">
                 <div>
                     <div class="font-semibold text-sm">Aminu Bello</div>
@@ -252,7 +237,7 @@
             </div>
             <div class=" mb-4.5 p-3.5 bg-slate-100 rounded-md">
                 <div class="text-xs font-semibold"  id="grade-student-name">Aminu Bello</div>
-                <div class="text-xs text-slate-500">STU00001 · Submitted Dec 18, 2025</div>
+                <div class="text-xs text-slate-500" id="grade-submission-date"> Submitted Dec 18, 2025</div>
             </div>
             <div class="mb-4.5">
                 <label class="font-semibold uppercase mb-1.5 block text-slate-500">Score (out of 100)</label>
@@ -263,34 +248,126 @@
             </div>
             <div class="mb-4.5">
                 <label class="font-semibold uppercase mb-1.5 block text-slate-500">Feedback</label>
-                <textarea class="w-full py-2.5 px-3.5 border-1 outline-none bg-slate-50 border-slate-200 rounded-md focus:border-blue-500 focus:bg-white" placeholder="Write constructive feedback for the student..."></textarea>
+                <textarea class="w-full py-2.5 px-3.5 border-1 outline-none bg-slate-50 border-slate-200 rounded-md focus:border-blue-500 focus:bg-white" placeholder="Write constructive feedback for the student..." id="feedback-textarea"></textarea>
             </div>
             <div class="flex gap-3 justify-end mt-6">
                 <button class="py-2.5 px-4.5 border border-slate-200 rounded-md bg-none text-sm fount-semibold pointer transiton-all hover:bg-slate-200" onclick="closeGradeModal()">Cancel</button>
-                <button class="inline-flex items-center gap-2 bg-blue-500 text-white rounded-md py-2.5 px-4.5 text-sm hover:bg-blue-600" onclick="closeGradeModal()" style="padding:11px 22px;">Submit Grade</button>
+                <button class="inline-flex items-center gap-2 bg-blue-500 text-white rounded-md py-2.5 px-4.5 text-sm hover:bg-blue-600" onclick="gradeAssignment()" style="padding:11px 22px;">Submit Grade</button>
             </div>
         </div>
     </div>
+
+    <div id="toast" class=" hidden fixed top-5 left-1/2 -translate-x-1/2 z-[500] bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 text-sm font-semibold fade-in">
+        <svg class="w-4 h-4 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        <span id="toast-msg">Done!</span>
+    </div>
+
+    <div id="confirm" class="hidden flex fixed inset-0 bg-[rgba(0,0,0,.45)] z-[200] items-center justify-center">
+        <div class="bg-white rounded-2xl w-fit max-w-[560px] shadow-xl">
+            <div class="border-b border-slate-200">
+                <h1 class="font-bold text-2xl py-4 px-8">Confirm Action</h1>
+            </div>
+            <div class="py-4 px-8">
+                <p class="text-slate-500">Are you sure you want to delete your account? This action cannot be undone.</p>
+            </div>
+            <div class="flex items-center justify-end gap-4 py-4 px-8">
+                <button 
+                    onclick="removeConfirmationPage()"
+                    class="border border-slate-200 rounded-md px-4 py-2 bg-slate-100 text-slate-900 hover:bg-slate-200">
+                    Cancel
+                </button>
+                <button 
+                    onclick="deleteAssignment()"
+                    class="border border-red-200 rounded-md px-4 py-2 bg-red-100 text-red-500 hover:bg-red-200">
+                    Delete
+                </button>
+            </div>
+        </div>
+
+    </div>
 </body>
 <script>
+    let assignmentId = null
+    let submissionId = null
+
+
     const assignmentModal = document.getElementById('assignment-modal');
     const submissionDrawerBackdrop = document.getElementById('submission-drawer-backdrop');
     const submissionDrawer = document.getElementById('submissions-drawer');
     const gradeModal = document.getElementById('grade-modal');
+
+    function showToast(msg,dur=2800){
+        document.getElementById('toast-msg').textContent=msg;
+        document.getElementById('toast').classList.remove('hidden');
+        setTimeout(()=>document.getElementById('toast').classList.add('hidden'),dur);
+    }
+
+    const showConfirmationPage = (id) => {
+        document.getElementById('confirm').classList.remove('hidden');
+        assignmentId = id;
+    }
+
+    const removeConfirmationPage = () => {
+        document.getElementById('confirm').classList.add('hidden');  
+        assignmentId = null
+    }
 
     function openModal() { 
         assignmentModal.classList.remove('hidden')
     }
     function closeModal() { 
         assignmentModal.classList.add('hidden')
+        assignmentId = null
     }
 
-    function openDrawer(title){
+    async function getSubmissions(url) {
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            if (!response.ok) showToast(data.error || 'Something went wrong', 3000);
+            return data;
+        } catch (error) {
+            console.log(error);
+            showToast('Something went wrong', 3000)
+        }
+    }
+
+    async function openDrawer(title, url){
+        const subs = await getSubmissions(url);
+        if (!subs) return;
+        const submissions = subs.submissions;
+        // console.log(submissions)
         document.getElementById('drawer-title').textContent = title + ' – Submissions';
         submissionDrawer.classList.remove('right-[-520px]');
         submissionDrawerBackdrop.classList.remove('hidden');
         submissionDrawer.classList.add('right-0');
         submissionDrawerBackdrop.classList.add('block');
+        document.getElementById('drawer-sub').textContent = `${submissions.length} submission received`;
+        document.getElementById('submission-data').innerHTML = '';
+        submissions.forEach(submission => {
+            document.getElementById('submission-data').innerHTML += `
+            <div class="flex items-center gap-3 py-3.5 border-b border-slate-200">
+                <div>
+                    <div class="font-semibold text-sm">${submission.student}</div>
+                    <div class="text-xs text-slate-500 ">${submission.submitted_at}</div>
+                </div>
+                <div class="ml-auto flex gap-1.5">
+                    ${submission.status === 'submitted' ?
+                        `
+                        <button class="py-1.5 px-3.5 rounded-sm text-sm font-semibold pointer transition-all  bg-blue-100 text-blue-500 hover:bg-blue-200" onclick="openGradeModal('${submission.student}', '/api/courses/assignments/${submission.assignment}/submissions/${submission.id}/', '${submission.assignment}')">Grade</button>
+                        `
+                    :
+                        `
+                        <button class="py-1.5 px-3.5 rounded-sm text-sm font-semibold pointer transition-all  bg-slate-100 text-slate-500 disabled:cursor-not-allowed" disabled >Graded</button>
+                        `
+                    }
+                    <a href="${submission.file_url}" target="_blank" class="py-1.5 px-3.5 rounded-sm text-sm font-semibold pointer transition-all  bg-emerald-100 text-emerald-500 hover:bg-emerald-200">View File</a>
+                </div>
+            </div>
+            `
+        })
     }
 
     function closeDrawer(){
@@ -300,13 +377,283 @@
         submissionDrawerBackdrop.classList.add('hidden');
     }
 
-    function openGradeModal(name) {
-        document.getElementById('grade-student-name').textContent = name;
+    async function getSubmissionDetails(url) {
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            if (!response.ok) showToast(data.error || 'Something went wrong', 3000);
+            return data;
+        } catch (error) {
+            console.log(error);
+            showToast('Something went wrong', 3000)
+        }
+    }
+
+    async function openGradeModal(name, url, assigment_id) {
+        const submission = await getSubmissionDetails(url);
+        if (!submission) return;
+
+        const subs = submission.submission;
+        submissionId = subs.id;
+        assignmentId = assigment_id;
         gradeModal.classList.remove('hidden');
+        document.getElementById('grade-student-name').textContent = name;
+        document.getElementById('grade-submission-date').textContent = `Submitted ${subs.submission_date}`;
     }
 
     function closeGradeModal() { 
         gradeModal.classList.add('hidden')
+        submissionId = null
+        assignmentId = null
     }
+
+    async function createAssignment(assignmentUrl){
+        const title = document.getElementById("assignment-title").value.trim();
+        const desc = document.getElementById("assignment-desc").value.trim();
+        const dueDate = document.getElementById("assignment-dueDate").value.trim();
+
+        if (!title || !desc || !dueDate) {
+            showToast('⚠️ All fields are required', 3200);
+            return;
+        }
+
+        try{
+            const response = await fetch(assignmentUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({
+                    title: title,
+                    description: desc,
+                    due_date: dueDate
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+            showToast(data.message || 'Error creating assignment', 3200);
+            return;
+            }
+
+            showToast('✅ Assignment created successfully!', 3200);
+            
+        
+            document.getElementById("assignment-title").value = "";
+            document.getElementById("assignment-desc").value = "";
+            document.getElementById("assignment-dueDate").value = "";
+            closeModal();
+            
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        }catch(error){
+            console.error('Error creating assignment', error);
+            showToast(`⚠️ ${error.message}`, 3200);
+        }
+
+    }
+
+    const deleteAssignment = async() => {
+        try {
+            const response = await fetch(`http://localhost:8000/api/courses/assignments/${assignmentId}/modify/`,{
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'same-origin',
+            })
+    
+            const data = await response.json();
+    
+            if (!response.ok) {
+                showToast(data.message || 'Error deleting assigment', 3200);
+                return;
+            }
+    
+            showToast('✅ Assignment deleted successfully!', 3200);
+            removeConfirmationPage();
+            window.location.reload();
+            
+        } catch (error) {
+            console.error('Error deleting assigment:', error);
+            showToast(error.message, 3200);
+        }
+    }
+
+    async function gradeAssignment() {
+        const score = document.getElementById('score-range').value;
+        const feedback = document.getElementById('feedback-textarea').value.trim();
+
+        if (!score || !feedback) {
+            showToast('⚠️ All fields are required', 3200);
+            return
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8000/api/courses/assignments/${assignmentId}/submissions/${submissionId}/grade`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({
+                    score: score,
+                    feedback: feedback
+                })
+            });
+
+            const data = await response.json();
+
+            if(!response.ok) {
+                showToast(data.message || 'Error grading assignment', 3200);
+                return;
+            }
+
+            showToast('✅ Assignment graded successfully!', 3200);
+            closeGradeModal();
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+
+        } catch (error) {
+            console.error('Error grading assignment:', error);
+            showToast(error.message, 3200);
+        }
+
+    }
+
+    async function getAssignmentDetails(url) {
+        const response = await fetch(url);
+        const data = await response.json();
+        if (!response.ok) showToast(data.error || 'Something went wrong', 3000);
+        return data;
+    }
+
+    async function openEditModal(url){
+        const today = new Date()
+        const info = await getAssignmentDetails(url);
+        if (!info) return;
+
+        const dueDate = new Date(info.due_date)
+        if (today > dueDate ){
+            return showToast('Assignmet has expired', 3200)
+        }
+
+        const formattedDate = dueDate.getFullYear() + '-' + String(dueDate.getMonth() + 1).padStart(2, '0') + '-' + String(dueDate.getDate()).padStart(2, '0') + 'T' + String(dueDate.getHours()).padStart(2, '0') + ':' + String(dueDate.getMinutes()).padStart(2, '0');
+
+        openModal();
+
+        assignmentId = info.assignment.id;
+
+        document.getElementById('assignment-modal').innerHTML = `
+        <div class="bg-white rounded-md w-full max-w-[560px] p-8 shadow-xl">
+            <div class="text-xl font-bold mb-5.5 flex items-center justify-between" id="modal-header">
+                Edit Assignment
+                <button class="bg-none pointer text-slate-500 hover:text-black text-xl" onclick="closeModal()">✕</button>
+            </div>
+            <div class="mb-4.5">
+                <label class="font-semibold uppercase mb-1.5 block text-slate-500 text-sm">Assignment Title</label>
+                <input 
+                    class="w-full py-2.5 px-3.5 border-1 outline-none bg-slate-50 border-slate-200 rounded-md focus:border-blue-500 focus:bg-white text-sm" 
+                    type="text" 
+                    placeholder="e.g. Introduction to Algebra"
+                    value="${info.assignment.title}"
+                    id="assignment-title"
+                />
+            </div>
+            <div class="mb-4.5">
+                <label class="font-semibold uppercase mb-1.5 block text-slate-500 text-sm">Description</label>
+                <textarea 
+                    class="w-full py-2.5 px-3.5 border-1 outline-none bg-slate-50 border-slate-200 rounded-md focus:border-blue-500 focus:bg-white text-sm resize-none min-h-[90px]" 
+                    placeholder="Describe the assignment instructions clearly..."
+                    id="assignment-desc"
+                >${info.assignment.description}</textarea>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="mb-4.5" style="margin:0">
+                    <label class="font-semibold uppercase mb-1.5 block text-slate-500 text-sm">Due Date</label>
+                    <input 
+                        class="w-full py-2.5 px-3.5 border-1 outline-none bg-slate-50 border-slate-200 rounded-md focus:border-blue-500 focus:bg-white text-sm" 
+                        type="datetime-local"
+                        id="assignment-dueDate"
+                        value="${formattedDate}"
+                    />
+                </div>
+            </div>
+            <div class="flex gap-3 justify-end mt-6">
+                <button class="py-2.5 px-4.5 border border-slate-200 rounded-md bg-none text-sm fount-semibold pointer transiton-all hover:bg-slate-200" onclick="closeModal()">Cancel</button>
+                <button class="inline-flex items-center gap-2 bg-blue-500 text-white rounded-md py-2.5 px-4.5 text-sm hover:bg-blue-600" onclick="editAssignment()" style="padding:11px 22px;" id="">Edit Assignment</button>
+            </div>
+        </div>
+        `
+    }
+
+    const editAssignment = async() => {
+
+        const title = document.getElementById("assignment-title").value.trim();
+        const desc = document.getElementById("assignment-desc").value.trim();
+        const dueDate = document.getElementById("assignment-dueDate").value.trim();
+
+        if (!title || !desc || !dueDate) {
+            showToast('⚠️ All fields are required', 3200);
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8000/api/courses/assignments/${assignmentId}/modify/`, {
+                method: 'PUT',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({
+                    title: title,
+                    description: desc,
+                    due_date: dueDate
+                })
+                
+            })
+
+            const data = await response.json()
+
+            if(!response.ok) {
+                showToast(data.message || 'Error editing assignment', 3200);
+                return;
+            }
+
+            showToast('✅ Assignment edited successfully!', 3200);
+            closeModal();
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+
+            
+        } catch (error) {
+            console.error('Error editing assignment:', error);
+            showToast(error.message, 3200);
+        }
+    }
+
+    function openbox() {
+        document.getElementById('box').classList.toggle('hidden');
+    }
+
+    document.addEventListener('click', function (event) {
+        const box = document.getElementById('box');
+        const button = document.getElementById('more-btn');
+
+        if (box.classList.contains('hidden')) return;
+
+        if (!box.contains(event.target) && !button.contains(event.target)) {
+            box.classList.add('hidden');
+        }
+    });
 </script>
 </html>
