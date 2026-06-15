@@ -255,7 +255,7 @@
         formData.append('file', uploadedFile);
 
         try {
-            const response = await fetch(`http://localhost:8000/api/courses/assignments/${id}/submit/`, {
+            const response = await fetch(`https://edutrack-app.azurewebsites.net/api/courses/assignments/${id}/submit/`, {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': '{{ csrf_token }}',

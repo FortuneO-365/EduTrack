@@ -502,14 +502,14 @@ def course_enrollment(request, course_id):
         enrollment, created = Enrollment.objects.get_or_create(student=student, course=course)
 
         if not created:
-            return Response({"message": "You are already enrolled in this course."}, status=status.HTTP_200_OK)
+            return JsonResponse({"message": "You are already enrolled in this course."}, status=status.HTTP_200_OK)
 
         Notification.objects.create(
             user=course.instructor.user,
             message=f"{student.user.username} has enrolled in your course {course.title}."
         )
 
-        return Response({"message": "Course enrolled successfully."}, status=status.HTTP_201_CREATED)
+        return JsonResponse({"message": "Course enrolled successfully."}, status=status.HTTP_201_CREATED)
     except Exception as e:
         logger.error(f"[course_enrollment] Unexpected error for course_id={course_id}: {e}", exc_info=True)
         return JsonResponse({"error": "Failed to enroll in course.", "detail": str(e)}, status=500)
@@ -534,7 +534,7 @@ def accept_enrollment(request, enrollment_id):
             message=f"Your enrollment in {enrollment.course.title} has been approved."
         )
 
-        return Response({"message": "Enrollment accepted."}, status=status.HTTP_200_OK)
+        return JsonResponse({"message": "Enrollment accepted."}, status=status.HTTP_200_OK)
     except Exception as e:
         logger.error(f"[accept_enrollment] Unexpected error for enrollment_id={enrollment_id}: {e}", exc_info=True)
         return JsonResponse({"error": "Failed to accept enrollment.", "detail": str(e)}, status=500)
@@ -560,7 +560,7 @@ def reject_enrollment(request, enrollment_id):
         )
 
         enrollment.delete()
-        return Response({"message": "Enrollment rejected."}, status=status.HTTP_200_OK)
+        return JsonResponse({"message": "Enrollment rejected."}, status=status.HTTP_200_OK)
     except Exception as e:
         logger.error(f"[reject_enrollment] Unexpected error for enrollment_id={enrollment_id}: {e}", exc_info=True)
         return JsonResponse({"error": "Failed to reject enrollment.", "detail": str(e)}, status=500)
