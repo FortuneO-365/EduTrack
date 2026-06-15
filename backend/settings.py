@@ -142,7 +142,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Azure Blob Storage Configuration
 AZURE_ACCOUNT_KEY = config("AZURE_ACCOUNT_KEY")
@@ -153,17 +153,15 @@ AZURE_CONTAINER = config("AZURE_CONTAINER")
 
 STORAGES = {
     "default": {
-        # Media files (user uploads like profile images, PDFs)
         "BACKEND": "storages.backends.azure_storage.AzureStorage",
         "OPTIONS": {
             "connection_string": AZURE_CONNECTION_STRING,
             "azure_container": AZURE_CONTAINER,
-            "overwrite_files": True,  # replace file if same name uploaded
+            "overwrite_files": True,
         },
     },
     "staticfiles": {
-        # Keep static files local for now (CSS, JS)
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
 
