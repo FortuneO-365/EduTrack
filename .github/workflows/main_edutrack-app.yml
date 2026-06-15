@@ -73,4 +73,5 @@ jobs:
         with:
           app-name: 'edutrack-app'
           slot-name: 'Production'
+          package: backend/
           
