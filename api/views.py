@@ -915,7 +915,7 @@ def submit_assignment(request, assignment_id):
         handle_unauthorized_instructor(request.user)
 
         assignment = get_object_or_404(Assignment, id=assignment_id)
-        today = timezone.now().date().strftime("%b %d, %Y - %I:%M %p")
+        today = timezone.now()
 
         if today > assignment.due_date:
             return JsonResponse({"message": "Assignment has passed due date."}, status=400)
